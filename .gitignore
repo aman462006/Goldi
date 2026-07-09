@@ -1,0 +1,14 @@
+/node_modules
+/.next
+/out
+/build
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+.env*.local
+
+# LibreOffice lock files
+.~lock.*#
+
+# Claude Code session files
+.claude/
