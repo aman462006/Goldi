@@ -158,7 +158,8 @@ export function DeepDiveModal({
         <div className="relative flex flex-grow overflow-hidden">
           {/* ── Slide nav sidebar ── */}
           <nav className="no-scrollbar hidden w-56 flex-shrink-0 overflow-y-auto border-r border-white/8 py-3 lg:block"
-               style={{ background: "rgba(255,255,255,0.025)" }}>
+               data-lenis-prevent
+               style={{ background: "rgba(255,255,255,0.025)", overscrollBehavior: "contain" }}>
             {slides.map((s, i) => {
               const active = i === index;
               return (
