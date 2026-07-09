@@ -14,13 +14,34 @@ import {
 import { cn } from "@/lib/utils";
 
 const efficiency = [
-  { name: "TOPCon", value: 25, color: "#3b8cff", note: "n-type · passivated contact" },
-  { name: "HJT", value: 24.5, color: "#7c3aed", note: "heterojunction" },
-  { name: "PERC", value: 23.5, color: "#38bdf8", note: "p-type · legacy leader" },
+  { name: "TOPCon", value: 27.79, color: "#3b8cff", note: "27.79% · JinkoSolar · ISFH-certified · Nov 2025" },
+  { name: "HJT",    value: 27.08, color: "#7c3aed", note: "27.08% · Trina Solar · ISFH-certified · Dec 2024" },
+  { name: "PERC",   value: 24.5,  color: "#38bdf8", note: "~24.5% · approaching theoretical limit" },
+];
+
+const EFF_MAX = 29; // denominator for bar widths — gives headroom above 27.79 %
+
+const SOURCES = [
+  {
+    label: "JinkoSolar 27.79 % TOPCon — pv magazine",
+    href: "https://www.pv-magazine.com/2025/11/27/jinkosolar-achieves-world-record-efficiency-of-27-79-for-topcon-solar-cell/",
+  },
+  {
+    label: "Trina Solar 27.08 % HJT — pv magazine",
+    href: "https://www.pv-magazine.com/2024/12/19/trina-solar-hits-new-27-08-record-for-hjt-solar-cell/",
+  },
+  {
+    label: "Solar Cell Efficiency Tables v66 (Green et al., 2025) — doi:10.1002/pip.3919",
+    href: "https://onlinelibrary.wiley.com/doi/10.1002/pip.3919",
+  },
+  {
+    label: "LONGi 26.81 % HJT — Nature Energy (2023)",
+    href: "https://www.nature.com/articles/s41560-023-01255-2",
+  },
 ];
 
 const highlights = [
-  { icon: TrendingUp, title: "25%+ efficiency", body: "Higher than PERC (23.5%) and HJT (24.5%) — driven by very high open-circuit voltage." },
+  { icon: TrendingUp, title: "27.79 % certified record", body: "TOPCon holds the silicon record (ISFH, Nov 2025), edging past HJT's 27.08 %. Commercial lines run at 24–25.5 %." },
   { icon: ShieldCheck, title: "Negligible degradation", body: "No first-year power drop. PERC modules can lose up to ~8% in year one." },
   { icon: Recycle, title: "Upgrades PERC lines", body: "8 of 12 steps are identical to PERC; operators and equipment transfer directly." },
   { icon: Zap, title: "Broad spectral response", body: "Strong across both short and long wavelengths, less weather-sensitive yield." },
@@ -50,7 +71,7 @@ export function Intro() {
               <h3 className="text-sm font-semibold uppercase tracking-widest text-white/50">
                 Champion cell efficiency
               </h3>
-              <span className="text-[11px] text-white/35">indicative %</span>
+              <span className="text-[11px] text-white/35">certified record %</span>
             </div>
             <div className="space-y-5">
               {efficiency.map((e, i) => (
@@ -69,7 +90,7 @@ export function Intro() {
                         boxShadow: `0 0 16px ${e.color}66`,
                       }}
                       initial={{ width: 0 }}
-                      whileInView={{ width: `${(e.value / 27) * 100}%` }}
+                      whileInView={{ width: `${(e.value / EFF_MAX) * 100}%` }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.2 + i * 0.15, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
                     />
@@ -77,6 +98,25 @@ export function Intro() {
                   <div className="mt-1 text-[11px] text-white/35">{e.note}</div>
                 </div>
               ))}
+            </div>
+
+            {/* Source links */}
+            <div className="mt-6 border-t border-white/8 pt-4">
+              <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-white/25">Sources</p>
+              <ul className="space-y-1">
+                {SOURCES.map((s) => (
+                  <li key={s.href}>
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[11px] leading-relaxed text-white/40 underline-offset-2 hover:text-white/70 hover:underline transition-colors"
+                    >
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </Reveal>

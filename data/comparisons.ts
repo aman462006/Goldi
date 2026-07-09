@@ -1,7 +1,7 @@
 export const cellComparison = {
   columns: ["TOPCon", "PERC", "HJT"],
   rows: [
-    { label: "Efficiency", values: ["25%+", "23.5%", "~24.5%"] },
+    { label: "Record efficiency", values: ["27.79 %", "~23.5 %", "27.08 %"] },
     { label: "Degradation", values: ["Negligible", "First-year up to ~8%", "Gradual (low-temp encapsulant)"] },
     { label: "Process steps", values: ["10–12", "11", "5"] },
     { label: "Equipment capex", values: ["~200M RMB/GW", "~120M RMB/GW", "300–350M RMB/GW"] },
@@ -12,7 +12,7 @@ export const cellComparison = {
 };
 
 export const topconAdvantages = [
-  "High efficiency: 25%+ versus PERC's 23.5%.",
+  "Record efficiency: 27.79 % (ISFH-certified, JinkoSolar, Nov 2025) — surpassing HJT's 27.08 % record and PERC's ~23.5 %.",
   "No power binning drop — negligible long-term degradation.",
   "Excellent spectral response across both short and long wavelengths.",
   "Energy yield is less affected by weather than PERC.",

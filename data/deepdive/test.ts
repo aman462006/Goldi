@@ -104,7 +104,7 @@ export const testDeepDive: DeepDiveSlide[] = [
       },
       {
         label: "Efficiency (η)",
-        text: "η = Pmpp / (Pin × Area). This is the headline number. For TOPCon cells, world-record η exceeds 26%; commercial production targets 23–25%. Even a 0.1% absolute efficiency difference corresponds to significant revenue over a 30-year module lifetime."
+        text: "η = Pmpp / (Pin × Area). This is the headline number. The certified world-record η for TOPCon is 27.79 % (JinkoSolar, ISFH-certified, Nov 2025), edging past HJT's 27.08 % record (Trina Solar, Dec 2024). Commercial TOPCon production lines run at 24–25.5 %. Even a 0.1 % absolute efficiency difference corresponds to significant revenue over a 30-year module lifetime."
       },
       {
         label: "Irev1 and Irev2",
