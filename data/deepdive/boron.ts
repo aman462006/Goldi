@@ -115,5 +115,62 @@ export const boronDeepDive: DeepDiveSlide[] = [
     subtitle: "The High-Tech Alternative",
     left: "While tube diffusion is the industry standard, Ion Implantation is an alternative method borrowed from the semiconductor industry.\n\nInstead of relying on heat and chemistry, a particle accelerator fires boron ions directly into the silicon lattice at high speeds. The implant dose and energy precisely control the surface concentration and junction depth.",
     right: "Advantages:\n- Extremely precise control over the doping profile.\n- Single-sided doping (no need to etch away the back later — no boron wrap-around).\n- Can easily create patterns for advanced cell architectures like IBC.\n- Avoids BSG formation entirely.\n\nDisadvantages:\n- The physical impact of the ions damages the crystal structure, requiring a high-temperature annealing step afterward to heal the lattice.\n- Very high capital equipment cost — typically 3–5× the cost of a diffusion tube.\n- Lower throughput than batch furnace processing."
+  },
+  {
+    type: "content",
+    title: "The Source Bubbler",
+    subtitle: "Constant-Temperature Bath Control",
+    bullets: [
+      {
+        label: "How the Liquid Source is Delivered",
+        text: "The boron source (BCl₃) is kept in a sealed bottle held at a precise, steady temperature — called a bubbler or constant-temperature bath. Nitrogen carrier gas is bubbled through the liquid to pick up and carry a controlled amount of boron vapour into the furnace tube. The amount of vapour carried depends directly on the bath temperature."
+      },
+      {
+        label: "Why Temperature Control is Critical",
+        text: "If the bath temperature drifts by even ~20°C, the amount of boron vapour delivered changes significantly, and the sheet resistance goes off-target. This is why the source bottle temperature is continuously monitored with tight alarm limits — even a brief temperature excursion can cause an entire boat's worth of wafers to miss specification."
+      },
+      {
+        label: "Too-High Pressure Causes Problems",
+        text: "If source pressure rises too high, liquid boron source can condense back into the gas delivery lines. This causes sudden, erratic bursts of dopant rather than a steady controlled flow — leading to within-wafer and wafer-to-wafer non-uniformity in sheet resistance. Pressure alarms on the source cabinet are a critical safety and quality control."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "Dummy Wafers & Quartz Saturation",
+    subtitle: "Ensuring Uniformity Across the Boat",
+    bullets: [
+      {
+        label: "What Are Dummy Wafers?",
+        text: "Dummy (sacrificial) wafers fill the empty slot positions at the front and rear ends of the quartz boat. Without them, gas flow is uneven — real wafers at the boat ends see different flow patterns from those in the center. Dummies ensure every production wafer experiences an identical gas environment and dopant exposure."
+      },
+      {
+        label: "What is Quartz-Boat Saturation?",
+        text: "When a quartz tube and boat are freshly cleaned, their surfaces are 'hungry' — they absorb dopant gas from the first few batches, stealing boron meant for the wafers. 'Saturation' means running the furnace until the quartz surfaces have absorbed enough source material that they no longer compete with the wafers. An unsaturated tube produces consistently high sheet resistance — the quartz is stealing the dopant."
+      },
+      {
+        label: "Boat Lifetime and Cleaning",
+        text: "Quartz boats accumulate BSG and boron deposits with every run. These deposits create parasitic dopant reservoirs that cause 'boat mark' appearance defects and unpredictable sheet resistance variation across the batch. Boats are cleaned every 60 runs on a strict maintenance schedule to prevent this."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "High Sheet Resistance at the Door End",
+    subtitle: "A Characteristic Furnace Failure Mode",
+    bullets: [
+      {
+        label: "The Symptom",
+        text: "Sheet resistance is consistently higher for wafers at the furnace door end of the boat but normal for wafers deeper inside. This spatial pattern — high at one end only — is the key diagnostic signature that distinguishes a door-seal issue from a global temperature or flow problem."
+      },
+      {
+        label: "The Root Cause",
+        text: "The furnace door is not sealing tightly. Exhaust suction draws source gas away from the door-end before it reaches those wafers. Alternatively, there is a small crack or failed sealing ring in the door — air leaks in, diluting the boron source at that location. The dopant simply never reaches the wafers near the door."
+      },
+      {
+        label: "The Fix",
+        text: "Reseat or replace the furnace door and its sealing ring. Perform a leak-rate test and confirm the leak rate is below 1.5 Pa/min before resuming production. Wafers affected by the door-end abnormality should be re-measured; those with sheet resistance outside the circulation limit must be reworked or scrapped."
+      }
+    ]
   }
 ];

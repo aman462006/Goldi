@@ -91,5 +91,62 @@ export const rearEtchDeepDive: DeepDiveSlide[] = [
         text: "Symptom: water spreads on the rear instead of beading. Root cause: HF concentration in the inline acid tank is depleted, or the exposure time is too short — BSG is only partially removed. This is critical: residual BSG creates a non-uniform interface for tunnel oxide growth. Fix: Check HF concentration immediately; if out-of-spec, replace the bath and re-process the affected wafers."
       }
     ]
+  },
+  {
+    type: "content",
+    title: "Protective Groups & Polishing Groups",
+    subtitle: "Selective Chemistry in One Bath",
+    bullets: [
+      {
+        label: "The Challenge",
+        text: "The alkaline polishing step must aggressively flatten the rear surface while leaving the front pyramidal texture completely untouched — in the same chemical bath. This requires chemical selectivity achieved through additive molecules."
+      },
+      {
+        label: "Protective Groups",
+        text: "These additive molecules selectively adsorb onto the front oxide surface, forming a physical barrier that shields it from the OH⁻ ions in the alkaline solution. As long as the front surface oxide is intact (maintained by the preceding BSG-removal HF step leaving a thin protective SiO₂), these molecules keep the alkaline bath from attacking the front silicon pyramids."
+      },
+      {
+        label: "Polishing Groups",
+        text: "These additives play the opposite role — they accelerate OH⁻ etching of the rear silicon surface. By concentrating the alkaline attack on the rear, they allow fast, uniform polishing of the back. Together, protective groups and polishing groups enable a single bath to simultaneously polish the rear and protect the front — without any physical masking."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "Why BSG Must Be Completely Removed",
+    subtitle: "The Consequences of Incomplete Etching",
+    bullets: [
+      {
+        label: "Moisture Absorption and Power Degradation",
+        text: "Borosilicate glass (BSG) is hygroscopic — it continuously absorbs moisture from the surrounding air. This moisture gradually degrades the cell by reducing short-circuit current (Isc) and causing power output to fall over the module's lifetime. Incomplete BSG removal is therefore a long-term reliability risk, not just an immediate defect."
+      },
+      {
+        label: "Dead Layer Effect on Carriers",
+        text: "BSG creates a 'dead layer' at the rear surface where minority-carrier lifetime is dramatically shortened. Carriers generated in or near this region recombine almost instantly rather than being collected — directly reducing both Voc and Isc."
+      },
+      {
+        label: "PECVD Colour Differences",
+        text: "If BSG residue remains on the surface when the PECVD silicon nitride coating is applied later, the optical film properties differ over glass patches vs. bare silicon. This shows up as visible colour differences on the finished cell — a cosmetic defect that causes rejections in customer appearance sorting even if electrical performance is not severely impacted."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "The Slow-Pull Station",
+    subtitle: "Precision Drying for Tunnel Oxide Control",
+    bullets: [
+      {
+        label: "What It Does",
+        text: "After the final cool DI-water rinse, wafers are drawn slowly and smoothly out of the tank (the 'slow lift' or 'slow pull' station) rather than being quickly withdrawn. The controlled withdrawal allows contaminants, residual chemicals, and loosened particles to drain cleanly from the surface rather than being dragged along with the wafer."
+      },
+      {
+        label: "Why It Matters for the Tunnel Oxide",
+        text: "Even brief air exposure on a wet silicon surface allows a thin native oxide to grow. The thickness of this native oxide directly affects the tunnel oxide grown in the subsequent LPCVD step. By controlling exactly how the wafer exits the final rinse — slowly and uniformly — the slow-pull station gives precise control over the surface state and starting oxide thickness. This ensures the LPCVD tunnel oxide grows to exactly its specified 1.9–2.1 nm target."
+      },
+      {
+        label: "The Resulting Surface",
+        text: "The output is a hydrophobic, hydrogen-terminated silicon surface with minimal and well-controlled native oxide. Any non-uniformity introduced here would propagate directly into the tunnel oxide quality and degrade the TOPCon passivated contact — making the slow-pull station a precision quality step despite looking like a simple rinse."
+      }
+    ]
   }
 ];

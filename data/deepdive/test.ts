@@ -138,5 +138,51 @@ export const testDeepDive: DeepDiveSlide[] = [
         text: "Measures the adhesion strength of the silver busbar contacts using a mechanical peel fixture. Target: front busbar ≥ 1 N average, ≥ 0.8 N minimum, ≤ 2 failed measurement points per cell. Poor pull force predicts ribbon delamination in module soldering and field failures."
       }
     ]
+  },
+  {
+    type: "content",
+    title: "Troubleshooting Trees",
+    subtitle: "Systematic Diagnosis From Final Test to Root Cause",
+    bullets: [
+      {
+        label: "What is a Troubleshooting Tree?",
+        text: "A troubleshooting tree is a structured, branching diagnostic tool used in solar cell manufacturing. You start from an observed final electrical symptom (such as a low Isc reading, low Voc, high Rs, or low Rsh) and follow a series of yes/no branches that narrow down the potential root cause to a specific upstream process step. This prevents engineers from randomly adjusting parameters and instead forces a systematic search."
+      },
+      {
+        label: "Low Isc Troubleshooting Tree",
+        text: "Low short-circuit current means fewer photons are being converted to electrons — either because light is being lost before it enters the cell, or generated carriers are being lost before they reach the contacts. The tree first asks: is the front ARC colour correct? If not → PECVD thickness deviation. Is texturing uniform? If not → texture uniformity or additive issue. Is the boron emitter sheet resistance within spec? If not → boron diffusion deviation. Is the front etch complete? If not → PSG residue blocking light. Following these branches turns a vague low-Isc failure into a specific upstream step to investigate."
+      },
+      {
+        label: "Low Voc Troubleshooting Tree",
+        text: "Low open-circuit voltage means excessive carrier recombination somewhere in the cell. The tree first asks: does EL show edge darkening? If yes → front etch edge isolation incomplete. Does EL show uniform dark area (not edge)? If yes → passivation failure (ALD or PECVD). Does the PL image show bulk lifetime reduction? If yes → contamination or firing overdose. Is firing temperature at spec? If not → firing profile deviation. The tree converts a single low-Voc reading into actionable root causes across ALD, PECVD, front etch, and firing."
+      },
+      {
+        label: "Why Trees Beat Random Adjustment",
+        text: "In a 10-step process, randomly changing parameters when a problem appears risks introducing a new problem while failing to fix the original. Troubleshooting trees enforce causal logic: every upstream step has a known electrical signature in the final I-V curve and EL/PL image. By reading those signatures systematically, engineers locate root causes in minutes instead of days — and fix the right thing, not a random guess."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "Why Every Step Determines Final Efficiency",
+    subtitle: "The Chain From Photon to Power",
+    bullets: [
+      {
+        label: "The Light Capture Chain",
+        text: "Final Isc depends on how many photons actually enter the silicon. Texturing determines how well the front pyramid structure traps light; PECVD determines the ARC optical properties. A problem in either step directly reduces Isc. PFMEA for texturing and PECVD both carry high RPN values precisely because their impact on light capture is irreversible — no later step can un-reflect a photon that bounced off the cell."
+      },
+      {
+        label: "The Carrier Lifetime Chain",
+        text: "Voc and FF depend on how long photogenerated carriers survive before recombining. Boron diffusion sets the emitter quality; ALD passivates the rear surface; PECVD provides surface and bulk hydrogen passivation during firing; firing itself must be precisely controlled to avoid silver spiking through the junction. Every one of these steps contributes independently to the total recombination rate. Weakness in any single step lowers the minority-carrier lifetime — and that loss cannot be recovered downstream."
+      },
+      {
+        label: "The Collection Chain",
+        text: "Even perfectly generated, long-lived carriers must still be collected. The n/n⁺ back surface field built by POCl₃ diffusion pushes minority carriers toward the front junction. The screen-printed silver contacts must fire through the SiNx without over-spiking. The busbar must connect fingers without introducing recombination. Each collection step is an efficiency multiplier — not an adder — meaning deficiencies compound rather than add."
+      },
+      {
+        label: "Why SPC and PFMEA Exist",
+        text: "Because every process step contributes multiplicatively to final efficiency, no single step can be treated as unimportant. SPC keeps each step operating at its optimal target with early-warning detection of drift. PFMEA quantifies the risk (RPN = Severity × Occurrence × Detection) so engineering resources are directed at the steps where failures are most severe, most likely, and hardest to detect. Together, they ensure that the full chain — texturing through testing — operates within the narrow window that produces commercial cells above the efficiency threshold."
+      }
+    ]
   }
 ];

@@ -195,5 +195,62 @@ export const pecvdDeepDive: DeepDiveSlide[] = [
       label: "The Plasma Chemistry",
       text: "Inside the chamber, the RF field fragments SiH₄ into Si and H, and NH₃ into N and H. These fragments combine on the wafer to form Hydrogenated Silicon Nitride (SiNx:H)."
     }
+  },
+  {
+    type: "content",
+    title: "Hydrogen Passivation & Bulk Passivation",
+    subtitle: "How SiNx Heals the Silicon Interior",
+    bullets: [
+      {
+        label: "Surface Passivation During Deposition",
+        text: "During PECVD deposition, hydrogen atoms from the fragmented SiH₄ and NH₃ gases bond directly to silicon dangling bonds at the wafer surface. This immediate chemical passivation reduces surface recombination velocity from the moment the film forms."
+      },
+      {
+        label: "Bulk Passivation During Firing",
+        text: "The SiNx:H film stores a large reservoir of hydrogen. During the later high-temperature firing step (peak ~786°C), this hydrogen is released from the SiNx film. It diffuses into the silicon wafer interior and passivates dangling bonds and defects deep inside the bulk — not just at the surface. This internal healing is called bulk passivation, and it raises the minority-carrier lifetime throughout the wafer."
+      },
+      {
+        label: "Why Both Matter",
+        text: "Surface passivation reduces the density of active defect traps at the silicon-SiNx interface. Bulk passivation reduces the density of traps inside the wafer volume. Together they raise carrier lifetime at every level of the cell — translating directly into higher Voc and better fill factor in the finished device."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "Nitrogen as a Simple Asphyxiant",
+    subtitle: "A Hidden but Serious Safety Risk",
+    bullets: [
+      {
+        label: "Why Nitrogen is Listed as a Hazard",
+        text: "Nitrogen (N₂) makes up 78% of normal air and is completely non-toxic. However, in an enclosed space or following a large nitrogen leak, it can displace oxygen and create an oxygen-deficient atmosphere below the safe threshold of 19.5% O₂."
+      },
+      {
+        label: "The Danger: No Warning",
+        text: "A person entering an oxygen-deficient atmosphere loses consciousness in seconds with virtually no warning — there is no detectable smell, taste, or physical discomfort before collapse. This makes nitrogen one of the most dangerous simple asphyxiants precisely because it provides no warning. Multiple fatalities have occurred when workers entered nitrogen-purged spaces to help unconscious colleagues."
+      },
+      {
+        label: "Required Controls in the PECVD Area",
+        text: "The PECVD furnace uses large flows of N₂ carrier gas. Oxygen-deficiency monitors must be installed and functioning in all areas where N₂ is used or stored. Workers must be trained to never enter an area with O₂ below 19.5% without a self-contained breathing apparatus (SCBA). On a low-O₂ alarm, evacuate and ventilate before any person re-enters."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "White Spots and Colour Variation",
+    subtitle: "Diagnosing PECVD Appearance Defects",
+    bullets: [
+      {
+        label: "What Causes White Spots?",
+        text: "White or light-coloured irregular patches on an otherwise uniform dark-blue SiNx-coated cell are almost always caused by upstream contamination. Inadequate PSG/BSG removal in the front etch step leaves glass residue islands on the silicon surface. When SiNx deposits over glass instead of bare silicon, the optical film behaves differently over those patches — they appear white because the interference colour is shifted."
+      },
+      {
+        label: "What Causes Colour Variation Bands or Gradients?",
+        text: "Since film colour depends precisely on both thickness and refractive index, even small deviations in gas flow, chamber pressure, or boat condition cause visible colour shifts. An overused graphite boat (past its replacement count) changes the thermal and gas-flow environment. Wafers not fully seated in boat pockets receive slightly different deposition conditions. Wrong SiH₄:NH₃ ratio shifts the refractive index and apparent colour."
+      },
+      {
+        label: "Prevention and Response",
+        text: "For white spots: enforce upstream quality gates — do not transfer non-conforming wafers from front etch to PECVD. For colour variation: verify gas flows and chamber pressure at each shift start; replace graphite boats on their scheduled replacement cycle; check wafer seating before each load. Both defect types are detected by AOI and the visual colour check at the unloader."
+      }
+    ]
   }
 ];

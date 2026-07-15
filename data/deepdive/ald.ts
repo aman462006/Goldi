@@ -233,5 +233,43 @@ export const aldDeepDive: DeepDiveSlide[] = [
       label: "Cycle Control",
       text: "To hit a 10nm target, the tool simply repeats the [TMA → Purge → H₂O → Purge] sequence exactly 100 times."
     }
+  },
+  {
+    type: "content",
+    title: "TMA Fire Hazard",
+    subtitle: "Handling the Pyrophoric Precursor",
+    bullets: [
+      {
+        label: "TMA is Pyrophoric",
+        text: "Trimethylaluminium (TMA, Al(CH₃)₃) ignites spontaneously on contact with air — no spark or ignition source is needed. Even a very small amount of TMA leaking into air will immediately catch fire. This makes TMA one of the most hazardous chemicals in the entire TOPCon manufacturing process."
+      },
+      {
+        label: "Violent Reaction with Water — Never Use Water",
+        text: "TMA reacts violently — even explosively — with water, generating methane gas and intense heat. Using water to fight a TMA fire causes an explosion that spreads the fire. Fire extinguishers near the ALD tool must use vermiculite (a dry mineral that smothers the flame by excluding oxygen) or approved dry chemical agents. Water extinguishers must not be present near the ALD tool."
+      },
+      {
+        label: "Required Safety Measures",
+        text: "Sealed, dedicated gas delivery with continuous TMA pressure monitoring and automatic shutoff on any deviation. Vermiculite absorber and approved extinguishers must be physically present at the ALD tool at all times. Only certified operators may work with TMA. On a gas-detector alarm, the area must be evacuated immediately — do not enter to investigate. TMA/H₂O pressure alarms are treated as emergency events."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "The Blue Film Test & Graphite Frame Issues",
+    subtitle: "Shift-by-Shift Quality Checks",
+    bullets: [
+      {
+        label: "The Blue Film Test",
+        text: "The thin Al₂O₃ film deposited by ALD shows a characteristic blue interference colour when viewed under normal light. Operators visually check this blue colour and its uniformity across the wafer at each shift. A uniform blue across the full wafer confirms a healthy, even deposition."
+      },
+      {
+        label: "What Non-Uniform Blue Means",
+        text: "A patchy, mismatched, or non-uniform blue colour immediately flags a problem in the ALD chamber — typically airflow irregularity, chamber pressure deviation, carrier plate issues, or a precursor delivery problem. This visual check is performed before releasing production wafers to the next step. Any abnormal blue film must be investigated and resolved before production resumes."
+      },
+      {
+        label: "Graphite Frame Jamming",
+        text: "Wafers travel through the ALD tool on graphite carrier frames. These frames deform over time from repeated thermal cycling; their guide rails wear down; mounting screws loosen; drive belts break. Any of these causes the frame to jam inside the chamber, breaking wafers and stopping the line. Al₂O₃ also builds up on the graphite frame surface with every production batch — scheduled frame cleaning is required to prevent this buildup from altering the frame geometry enough to cause jamming."
+      }
+    ]
   }
 ];

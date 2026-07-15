@@ -123,6 +123,25 @@ export const printDeepDive: DeepDiveSlide[] = [
     ]
   },
   {
+    type: "content",
+    title: "Why the Front Busbar Doesn't Fire Through",
+    subtitle: "Non-Penetrating Paste Protects Voc",
+    bullets: [
+      {
+        label: "Fingers vs Busbars — Different Jobs",
+        text: "The front grid consists of two types of metal lines: narrow fingers that collect current from the silicon surface, and wider busbars that gather current from all the fingers and connect to tabbing ribbons for module assembly. These two lines have fundamentally different electrical roles — and deliberately use different paste formulations."
+      },
+      {
+        label: "Why Fingers Use Penetrating Paste",
+        text: "Fingers must make direct electrical contact with the silicon emitter beneath the SiNx anti-reflection coating and Al₂O₃ passivation layer. Penetrating paste contains glass frit that melts during firing, etches through the SiNx, and allows silver to contact the silicon directly. Without this penetration, current cannot flow from the cell into the finger grid."
+      },
+      {
+        label: "Why Busbars Use Non-Penetrating Paste",
+        text: "Every spot where silver fires through the SiNx to touch silicon becomes a high-recombination point that lowers Voc. The front busbar only needs to electrically connect to the silver fingers — it does not need to reach the silicon at all. Non-penetrating busbar paste sits on top of the SiNx without damaging it, minimising the total area of metal-on-silicon contact. This deliberate choice protects Voc while still enabling full current collection through the fingers."
+      }
+    ]
+  },
+  {
     type: "comparison",
     title: "Statistical Process Control (SPC)",
     subtitle: "Monitoring the Print",

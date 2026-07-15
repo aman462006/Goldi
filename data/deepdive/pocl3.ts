@@ -99,5 +99,43 @@ export const pocl3DeepDive: DeepDiveSlide[] = [
         text: "In TOPCon, the selective emitter concept applies to both the front boron emitter (where laser doping can create local p⁺⁺ regions under front contacts) and the rear poly-Si (where uniform heavy n⁺ doping is already achieved by POCl₃ because the entire rear is a contact surface, not just the fingers)."
       }
     ]
+  },
+  {
+    type: "content",
+    title: "Why the Phosphorus Target Differs from Boron",
+    subtitle: "32–62 Ω/□ vs ~390 Ω/□ Explained",
+    bullets: [
+      {
+        label: "Different Layers, Different Jobs",
+        text: "The boron front emitter and the phosphorus rear poly-Si are doped to completely different sheet resistance targets because they serve entirely different electrical functions in the cell."
+      },
+      {
+        label: "Boron Emitter (~390 Ω/□ — Lighter Doping)",
+        text: "The front emitter is tuned to a higher sheet resistance because heavy doping here causes Auger recombination — freshly generated carriers in an over-doped surface recombine almost instantly, lowering both Voc and Isc. The ~390 Ω/□ target balances hole collection efficiency against recombination losses in the emitter region."
+      },
+      {
+        label: "Phosphorus Rear Poly-Si (32–62 Ω/□ — Heavier Doping)",
+        text: "The rear poly-Si must act as a low-resistance conductive contact layer — almost like a metal. It needs to carry current laterally from the entire rear surface to the metal fingers with minimal resistive losses. Heavy phosphorus doping achieves this. Recombination inside the poly-Si is tolerable because any carrier that has already tunnelled through the oxide has effectively been collected."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "POCl₃ Hazard Profile",
+    subtitle: "Chemical Safety",
+    bullets: [
+      {
+        label: "Fuming and Moisture Reactivity",
+        text: "POCl₃ (phosphoryl chloride) fumes strongly in moist air and is highly hygroscopic. On contact with water — including the humidity in ambient air — it reacts, releasing heat, hydrogen chloride (HCl) fumes, and phosphoric acid (H₃PO₄). Even a brief exposure to humid air causes visible fuming."
+      },
+      {
+        label: "Toxicity Comparable to Phosgene",
+        text: "The toxicity of POCl₃ is compared in the literature to phosgene (a chemical warfare agent). It severely irritates and chemically burns the eyes, skin, and respiratory tract on contact. Inhalation of fumes causes chemical burns to the airways and lungs. Even brief exposures require immediate medical attention and decontamination."
+      },
+      {
+        label: "Required Precautions",
+        text: "Full-face respirators and completely sealed protective clothing are mandatory when working near POCl₃. All gas lines and supply connections must be sealed and kept dry. Never allow contact with water — use only dry chemical extinguishers. In the event of a spill or leak, evacuate the area immediately and call emergency services; do not attempt to handle a large release without specialist training."
+      }
+    ]
   }
 ];

@@ -264,5 +264,147 @@ export const lpcvdDeepDive: DeepDiveSlide[] = [
       label: "Quality Control",
       text: "Defects like hazy wafers, boat marks, and non-uniformity are rigorously checked via SPC (Statistical Process Control)."
     }
+  },
+  {
+    type: "comparison",
+    title: "TOPCon vs PERC vs HJT",
+    subtitle: "Three Generations of Solar Cell Technology",
+    comparison: [
+      {
+        name: "TOPCon",
+        color: "#3b8cff",
+        badge: "Current Leader",
+        points: [
+          "~25% efficiency (commercial production), 27.79% certified world record.",
+          "~10–12 manufacturing steps — upgrades ~8 existing PERC steps.",
+          "Equipment cost ~200 million RMB/GW — leverages existing PERC lines.",
+          "Near-zero light-induced degradation over 30 years.",
+          "N-type silicon base: far less sensitive to iron and metal impurities than P-type."
+        ]
+      },
+      {
+        name: "PERC",
+        color: "#fb7185",
+        badge: "Previous Standard",
+        points: [
+          "~23.5% efficiency ceiling — approaching the theoretical limit for its structure.",
+          "P-type silicon base: more sensitive to metallic impurities and suffers LID (light-induced degradation).",
+          "Simpler process (~8 main steps) — TOPCon is largely an upgrade of this.",
+          "Lower cost per GW but the efficiency gap with TOPCon grows each year.",
+          "Being phased out of new capacity investment in favour of TOPCon."
+        ]
+      },
+      {
+        name: "HJT",
+        color: "#a3e635",
+        badge: "Future Challenger",
+        points: [
+          "~27%+ efficiency potential; only ~5 steps but requires entirely new equipment.",
+          "Equipment cost 300–350 million RMB/GW — no PERC equipment reuse.",
+          "Uses amorphous silicon (a-Si) layers deposited at low temperature (<200°C).",
+          "Excellent bifaciality and low temperature coefficient.",
+          "Higher upfront investment; supply chain still maturing relative to TOPCon."
+        ]
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "Why N-type Silicon?",
+    subtitle: "The Base Material Advantage",
+    bullets: [
+      {
+        label: "Resistance to Metal Impurities",
+        text: "N-type silicon (phosphorus-doped base) is far less sensitive to common metallic impurities like iron than P-type silicon. In P-type, even a few parts-per-billion of iron dramatically shortens minority-carrier lifetime. N-type is much more tolerant, making the cells more robust and consistent in production."
+      },
+      {
+        label: "Immunity to Light-Induced Degradation (LID)",
+        text: "P-type PERC cells suffer from LID — in the first hours of light exposure, boron-oxygen complexes form that act as recombination centres, reducing efficiency by 1–3% permanently. N-type silicon does not form boron-oxygen complexes, so TOPCon cells are essentially immune to this mechanism. Their efficiency on day 1 is their efficiency on day 10,000."
+      },
+      {
+        label: "Better Long-Term Revenue",
+        text: "Combined with the passivated contact structure, N-type TOPCon cells hold their rated efficiency far better over the 30-year field lifetime of a solar installation. This makes TOPCon more valuable not just at installation but over the full revenue life of a solar farm — a key reason for its rapid market adoption."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "LPCVD Process Phases in Detail",
+    subtitle: "What Happens Inside the Furnace Tube",
+    bullets: [
+      {
+        label: "Phase 1: Ramp-Up and Stabilise",
+        text: "The furnace temperature is raised to the oxidation setpoint (500–700°C) and held until it is stable across the entire tube length. Premature gas introduction before temperature is uniform causes non-uniform oxide thickness — the wafers at the hot and cold ends would receive different oxide."
+      },
+      {
+        label: "Phase 2: Oxidation and Purge",
+        text: "Oxygen flows into the tube, reacting with the rear silicon surface to grow the tunnel oxide (O₂ + Si → SiOₓ). After the target thickness of ~1.9–2.1 nm is reached, the tube is purged with inert nitrogen to remove all residual oxygen before switching gases."
+      },
+      {
+        label: "Phase 3: Poly-Silicon Deposition",
+        text: "Temperature is adjusted to 590–630°C and silane (SiH₄) is introduced at a low, controlled flow rate. SiH₄ thermally decomposes on the hot surface: SiH₄ → Si + 2H₂. Silicon deposits as amorphous/poly-Si on the tunnel oxide while hydrogen gas is pumped away continuously."
+      },
+      {
+        label: "Phase 4: Final Purge",
+        text: "Silane is shut off and the tube is purged with inert gas before the boat is withdrawn. This purge is safety-critical — residual SiH₄ in contact with air during unloading would ignite spontaneously (SiH₄ is pyrophoric, auto-igniting near 40°C)."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "Film Colour → Thickness",
+    subtitle: "Reading Poly-Si Thickness by Eye",
+    bullets: [
+      {
+        label: "Why Colour Indicates Thickness",
+        text: "Thin transparent films produce interference colours that shift predictably with thickness — the same effect as an oil sheen on water. The poly-Si film on the rear of each wafer shows a characteristic colour that operators use as a fast pass/fail indicator at the unloader."
+      },
+      {
+        label: "The Colour Scale",
+        text: "Jade-green appearance corresponds to approximately 80–85 nm — the low end, below specification. Pink corresponds to approximately 115–120 nm. Burgundy (dark red-brown) corresponds to approximately 130 nm and is the standard production target. Any other colour indicates a deviation from the intended thickness."
+      },
+      {
+        label: "Precise Measurement: JA Ellipsometer",
+        text: "Visual colour is a fast check but not a measurement. The precise tunnel oxide thickness (target 1.9–2.1 nm) is measured periodically with a JA ellipsometer — an optical instrument that determines film thickness from the angle of polarised reflected light. The ellipsometer is used for process setup and verification, not continuous monitoring."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "Quartz Thermal Mismatch",
+    subtitle: "Why Quartz Parts Keep Cracking",
+    bullets: [
+      {
+        label: "The Root Cause",
+        text: "Amorphous silicon (a-Si) and quartz (SiO₂) have very different thermal expansion coefficients. As the furnace heats and cools through hundreds of production cycles, the silicon film deposited on the quartz parts expands and contracts at a different rate than the underlying quartz tube and boat."
+      },
+      {
+        label: "Cumulative Stress and Failure",
+        text: "With each thermal cycle, the mismatch stress at the silicon-quartz interface accumulates. When the accumulated stress exceeds the fracture toughness of the quartz component, it cracks — sometimes catastrophically during a production run. This is a known, expected maintenance consumable on LPCVD equipment."
+      },
+      {
+        label: "Mitigation Strategies",
+        text: "Applying a transition buffer layer before the main film deposition can relieve interfacial stress. Using higher-purity synthetic quartz with greater strength extends component life. Regular measurement of silicon buildup thickness on quartz parts allows predictive replacement before cracking occurs."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "Silane (SiH₄) Safety",
+    subtitle: "Handling a Pyrophoric Gas",
+    bullets: [
+      {
+        label: "What 'Pyrophoric' Means",
+        text: "Silane ignites spontaneously on contact with air — no spark or ignition source is needed. Auto-ignition occurs at approximately 40°C, meaning even a tiny leak of SiH₄ into warm factory air can immediately cause a flash fire or explosion. This makes silane one of the most hazardous gases used in the entire TOPCon process."
+      },
+      {
+        label: "Why It Is Especially Dangerous",
+        text: "There is often no visible leak or detectable warning before ignition. The first sign of a SiH₄ leak can be a flash fire. Additionally, SiH₄ is toxic — the white amorphous silica smoke produced by combustion causes lung and kidney damage if inhaled. Even without fire, high concentrations are asphyxiating."
+      },
+      {
+        label: "Required Safety Controls",
+        text: "Fully sealed, dedicated gas delivery lines with no joints in confined spaces. Continuous gas leak detectors with automatic shutoff valves on alarm. Strict PPE including full-face respirators and chemical-resistant clothing. The final purge step before tube opening is a mandatory safety operation — it ensures no residual SiH₄ can contact air during wafer unloading."
+      }
+    ]
   }
 ];

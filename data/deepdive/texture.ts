@@ -160,5 +160,62 @@ export const textureDeepDive: DeepDiveSlide[] = [
         text: "The texturing reaction generates hydrogen gas (2 NaOH + Si + H₂O → Na₂SiO₃ + 2 H₂↑). The tool exhaust system must be functioning to prevent H₂ accumulation. Hydrogen is odorless and extremely flammable (LEL 4%). Never operate tanks with exhaust fans off."
       }
     ]
+  },
+  {
+    type: "content",
+    title: "PFMEA & Quality Tools",
+    subtitle: "Structured Risk Management",
+    bullets: [
+      {
+        label: "What is PFMEA?",
+        text: "Process Failure Mode and Effects Analysis — a structured table that lists everything that could go wrong in a process step, its cause, its consequence, and the controls in place to prevent or detect it. Every process step in the TOPCon line has its own PFMEA review."
+      },
+      {
+        label: "What is RPN?",
+        text: "Risk Priority Number — a score calculated as Severity × Occurrence × Detection. It ranks how urgent each identified risk is. Higher RPN items are prioritised for corrective action first. For texturing, the highest-RPN risks are machine drive-system failure and poor workshop air cleanliness (both RPN 120)."
+      },
+      {
+        label: "What is SPC?",
+        text: "Statistical Process Control — regularly sampling measurements (weight loss, reflectivity) and plotting them on control charts against defined limits. The purpose is to catch a process drift early, before it produces scrap, rather than discovering problems only at final test. The philosophy: catch problems at the source."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "AGV, Boats & AOI",
+    subtitle: "Automation and Inspection",
+    bullets: [
+      {
+        label: "What is an AGV?",
+        text: "An Automated Guided Vehicle — a self-driving cart that transports wafer cassettes between machines along predetermined paths on the factory floor. AGVs carry 450 wafers per cassette at the texturing station, eliminating manual handling between process tools."
+      },
+      {
+        label: "What is a Boat?",
+        text: "A carrier that holds many wafers standing parallel so chemicals or gas can reach every wafer surface simultaneously. In texturing, qualified wafers are inserted into boats at 120 wafers per boat; every 6 boats form one batch processed through the machine's 3 texturing tanks at once."
+      },
+      {
+        label: "What is AOI at Load/Unload?",
+        text: "Automated Optical Inspection — a camera system at the loader and unloader that photographs each wafer and uses software to automatically detect defects such as missing pieces, chipped corners, and cracked edges. Defective wafers are rejected before they waste further processing resources. Post-texture AOI checks every wafer in the boat at unloading."
+      }
+    ]
+  },
+  {
+    type: "content",
+    title: "Why the Additive Matters",
+    subtitle: "Surface Tension and Pyramid Uniformity",
+    bullets: [
+      {
+        label: "What the Additive Controls",
+        text: "The additive raises the solution's viscosity and lowers surface tension so the etching reaction proceeds evenly rather than randomly across the wafer surface. Without it, pyramid size and distribution varies dramatically from wafer to wafer and even within a single wafer."
+      },
+      {
+        label: "Hydrogen Bubble Management",
+        text: "Hydrogen gas is a byproduct of the texturing reaction. If bubbles cling to the surface, they mask that spot from the etchant — leaving islands with no pyramids. The additive helps hydrogen bubbles detach cleanly and quickly, keeping the reaction uniform. Bubble density, size, and residence time on the surface are the key variables the additive controls."
+      },
+      {
+        label: "Wafer-to-Wafer Consistency",
+        text: "By controlling reaction rate and surface tension simultaneously, the additive keeps pyramid morphology consistent across all wafers in a batch. Additive concentration is one of the SPC-monitored parameters — even small drifts in concentration shift pyramid shape and reflectivity outside the target range."
+      }
+    ]
   }
 ];
