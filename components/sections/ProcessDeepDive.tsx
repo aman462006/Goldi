@@ -337,6 +337,7 @@ export function ProcessDeepDive() {
       <AnimatePresence>
         {deepDiveStep?.deepDive && (
           <DeepDiveModal
+            key={deepDiveId}
             slides={deepDiveStep.deepDive}
             accent={deepDiveStep.accent}
             stepName={deepDiveStep.name}

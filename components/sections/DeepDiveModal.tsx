@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -141,7 +142,7 @@ export function DeepDiveModal({
 
   const stepLabel = stepName ?? slides[0]?.title ?? "Deep Dive";
 
-  return (
+  return createPortal(
     <motion.div
       className="fixed inset-0 z-[200] flex flex-col"
       initial={{ opacity: 0 }}
@@ -386,7 +387,8 @@ export function DeepDiveModal({
           </AnimatePresence>
         </div>
       </div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }
 
