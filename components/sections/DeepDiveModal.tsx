@@ -149,10 +149,10 @@ export function DeepDiveModal({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.28, ease: "easeOut" }}
     >
-      {/* ── Layered background ── */}
-      <div className="absolute inset-0" style={{ background: "#04060d" }} />
+      {/* ── Layered background (pointer-events-none so they never swallow clicks) ── */}
+      <div className="pointer-events-none absolute inset-0" style={{ background: "#04060d" }} />
       <div
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0"
         style={{
           background: `radial-gradient(900px 550px at 65% -5%, ${accent}1a, transparent 65%),
                        radial-gradient(600px 500px at -8% 80%, rgba(124,58,237,0.13), transparent 60%)`,
@@ -161,7 +161,7 @@ export function DeepDiveModal({
       <div className="pointer-events-none absolute inset-0 grid-lines opacity-[0.038]" />
       {/* Top accent hairline */}
       <div
-        className="absolute inset-x-0 top-0 z-10 h-px"
+        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px"
         style={{
           background: `linear-gradient(90deg, transparent 0%, ${accent}90 45%, rgba(124,58,237,0.7) 65%, transparent 100%)`,
         }}
