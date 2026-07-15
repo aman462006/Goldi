@@ -339,6 +339,7 @@ export function ProcessDeepDive() {
           <DeepDiveModal
             slides={deepDiveStep.deepDive}
             accent={deepDiveStep.accent}
+            stepName={deepDiveStep.name}
             onClose={() => setDeepDiveId(null)}
           />
         )}
