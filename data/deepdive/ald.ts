@@ -271,5 +271,75 @@ export const aldDeepDive: DeepDiveSlide[] = [
         text: "Wafers travel through the ALD tool on graphite carrier frames. These frames deform over time from repeated thermal cycling; their guide rails wear down; mounting screws loosen; drive belts break. Any of these causes the frame to jam inside the chamber, breaking wafers and stopping the line. Al₂O₃ also builds up on the graphite frame surface with every production batch — scheduled frame cleaning is required to prevent this buildup from altering the frame geometry enough to cause jamming."
       }
     ]
+  },
+  {
+    type: "table",
+    title: "ALD Process Parameter Reference",
+    subtitle: "Al₂O₃ Deposition Industrial Specifications",
+    headers: ["Parameter", "Value / Range", "Why It Matters"],
+    rows: [
+      ["Precursor 1 (Al source)", "TMA — Trimethylaluminium Al(CH₃)₃", "Self-limiting: reacts with Si-OH groups; each dose covers exactly one monolayer"],
+      ["Precursor 2 (O source)", "H₂O — Deionised water vapour", "Reacts with Al-CH₃ to form Al-OH; releases methane (CH₄) as byproduct"],
+      ["Deposition temperature", "150–250 °C", "Too low → incomplete TMA reaction (poor film quality); too high → TMA decomposition (CVD-like growth, loses self-limiting)"],
+      ["Growth rate per cycle", "~0.1 nm/cycle (0.96–1.0 Å)", "Fixed by self-limiting chemistry; independent of precursor dose above saturation"],
+      ["Target thickness", "5–15 nm (typically 8–10 nm)", "< 5 nm → poor coverage in pyramid valleys; > 15 nm → no additional passivation gain"],
+      ["Number of cycles (for 10 nm)", "~100 cycles", "Each cycle: TMA pulse → N₂ purge → H₂O pulse → N₂ purge"],
+      ["Purge time (between pulses)", "Critical — must be complete", "Incomplete purge → TMA meets H₂O in gas phase → CVD-mode → non-uniform, rough film"],
+      ["Fixed negative charge density", "~10¹² cm⁻²", "Provides field-effect passivation for p-type emitter; created during film formation"],
+      ["Interface defect density (Dit)", "< 10¹¹ cm⁻²eV⁻¹", "After annealing; lower = better chemical passivation = lower surface recombination velocity"],
+      ["Surface recombination velocity", "< 5–10 cm/s (passivated)", "Unpassivated Si: > 10,000 cm/s; ALD Al₂O₃ achieves near-theoretical minimum"],
+      ["Graphite frame replacement", "Per buildup schedule", "Al₂O₃ accumulation changes frame geometry → wafer misalignment → jamming"],
+      ["Visual check frequency", "Every shift", "Blue film colour and uniformity is rapid pass/fail indicator before releasing to PECVD"],
+    ],
+  },
+  {
+    type: "content",
+    title: "Field-Effect Passivation — Atomic-Level Detail",
+    subtitle: "Why Negative Charge Reduces Recombination",
+    bullets: [
+      {
+        label: "Source of Negative Fixed Charge in Al₂O₃",
+        text: "During ALD deposition, Al atoms are in 3+ oxidation state and oxygen atoms are in 2- state. At the Al₂O₃/silicon interface, there is a slight excess of oxygen atoms (O²⁻) relative to aluminium — this oxygen excess creates negative fixed charges (~ −10¹² cm⁻²). These charges are permanently fixed in the film (not mobile like trap states) and cannot be neutralised by applying voltage. Density can be controlled by ALD conditions: deposition at 150°C gives higher negative charge than at 250°C because lower temperature gives less crystalline, more oxygen-rich Al₂O₃."
+      },
+      {
+        label: "How Negative Charge Passivates the Boron Emitter",
+        text: "The boron emitter is p-type — its majority carriers are holes. The negative fixed charge in Al₂O₃ creates an electric field pointing away from the silicon (toward the Al₂O₃). This field repels electrons (minority carriers) away from the surface — exactly where the defect traps are. With fewer electrons near the surface, the probability of electron-hole recombination at surface traps drops dramatically. The concentration of minority carriers (electrons) near the surface is reduced by exp(qV_field/kT) — potentially by several orders of magnitude."
+      },
+      {
+        label: "Why SiNx Cannot Replace Al₂O₃ on the p-Type Emitter",
+        text: "SiNx (silicon nitride) deposited by PECVD contains positive fixed charges (+10¹²–10¹³ cm⁻²). These positive charges attract electrons to the surface — the opposite of what we need. Electrons accumulate at the Si-SiNx interface, increasing recombination. For n-type surfaces (like the rear of some PERC cells), positive charge from SiNx is beneficial — it repels holes. For p-type emitters (front of TOPCon), only negative-charge materials (Al₂O₃) provide field-effect passivation. This is the fundamental reason ALD Al₂O₃ is used on the front emitter while SiNx is reserved for n-type surfaces and for the ARC function."
+      },
+      {
+        label: "Synergy: Chemical + Field-Effect Together",
+        text: "World-record low surface recombination velocities (< 1 cm/s) require both mechanisms working together. Al₂O₃ provides excellent chemical passivation (bonding to dangling bonds: Al–O–Si bonds form with Dit < 10¹¹ cm⁻²eV⁻¹) AND strong field-effect passivation (−10¹² cm⁻² negative charge). PECVD SiNx on top provides: hydrogen to further improve interface quality during firing, mechanical protection for the Al₂O₃, and the ARC optical function. The stack exploits each material's unique strength. No single material can simultaneously achieve all four functions at current commercial cost and throughput."
+      }
+    ]
+  },
+  {
+    type: "faq",
+    title: "Frequently Asked Questions",
+    subtitle: "Interview Preparation & Technical Deep Dive",
+    questions: [
+      {
+        q: "What makes ALD unique compared to CVD or PVD for depositing Al₂O₃?",
+        a: "CVD deposits films by continuously flowing reactive precursors simultaneously — growth rate depends on temperature, flow, and time; uniformity on complex surfaces is limited because local depletion of precursors occurs near the surface. PVD (sputtering/evaporation) deposits line-of-sight — pyramid valleys and overhangs receive thinner coatings. ALD uses sequential, self-limiting reactions: precursor A saturates all surface sites (then purge), then precursor B reacts only with the chemisorbed A (then purge). No simultaneous gas-phase reaction. Thickness is determined only by cycle count. Conformality is near-perfect (typically >99%) because each cycle reacts with the surface uniformly regardless of geometry. For 1–5 µm silicon pyramids with aspect ratios up to 1:1, ALD covers every atom including the deepest valleys."
+      },
+      {
+        q: "How does the Al₂O₃ activation anneal work and why is it necessary?",
+        a: "As-deposited ALD Al₂O₃ (without annealing) has relatively few activated negative fixed charges — the as-deposited film is somewhat hydrogen-rich and structurally amorphous with many OH groups that partially neutralise the negative charge. An anneal at 350–450°C (or the PECVD firing step at ~780°C) releases excess hydrogen from the film and from the Si/Al₂O₃ interface. This: (1) crystallises the amorphous Al₂O₃ partially, increasing charge density; (2) allows interstitial hydrogen from the SiNx overlayer to diffuse to the Si/Al₂O₃ interface and further passivate remaining dangling bonds; (3) densifies the film, improving its mechanical stability. Post-anneal, the fixed charge density doubles or triples compared to the as-deposited state and surface recombination velocity drops by up to 10×."
+      },
+      {
+        q: "Why is TMA pyrophoric and how is it handled safely in the factory?",
+        a: "TMA (Al(CH₃)₃) contains three Al–C bonds. When TMA contacts O₂ in air, rapid oxidation of both the aluminium center and the methyl groups occurs: 4 Al(CH₃)₃ + 18 O₂ → 2 Al₂O₃ + 12 CO₂ + 18 H₂O. This reaction is highly exothermic (ΔH ≈ −1100 kJ/mol) and proceeds without any initiation energy — hence pyrophoric. Even trace TMA in warm air ignites. Water makes it worse: TMA + 3H₂O → Al(OH)₃ + 3 CH₄; the CH₄ generated can then burn. Safety protocols: sealed stainless steel delivery lines (zero joints in occupied areas), continuous TMA gas detector with auto-shutoff at alarm, vermiculite (not water or CO₂) for fire suppression, only certified operators, evacuation on any gas alarm before investigation."
+      },
+      {
+        q: "What determines the optimal Al₂O₃ thickness for TOPCon front passivation?",
+        a: "Below 5 nm: (1) surface coverage on textured pyramids is incomplete — some Si dangling bonds are not covered; (2) the fixed charge layer is too thin to create adequate electric field; (3) the film has pinholes where two adjacent cycles don't fully merge. Above 15 nm: (1) passivation saturates — no measurable improvement above ~10 nm for both chemical and field-effect mechanisms; (2) deposition time increases (ALD is slow); (3) mechanical stress in the film increases, risking delamination during firing. The 8–10 nm sweet spot gives near-maximum passivation quality at minimum deposition time. Some leading-edge fabs use 7 nm to increase throughput, accepting marginally higher surface recombination velocity (< 3 cm/s vs < 1 cm/s at 12 nm)."
+      },
+      {
+        q: "How does the 'blue film' colour confirm ALD quality and what does non-uniform colour indicate?",
+        a: "The ~8–10 nm Al₂O₃ film creates a characteristic blue interference colour (same physics as a soap bubble or oil film). Blue is visible because: the Al₂O₃ thickness (n × d ≈ 1.66 × 9 nm ≈ 15 nm optical path) causes constructive interference at ~450 nm (blue) and destructive interference at other wavelengths. A uniform, consistent blue across the wafer confirms: (1) uniform thickness within ±1 nm; (2) uniform refractive index (correct film composition); (3) complete surface coverage. Non-uniform blue (patches, streaks, lighter/darker regions) means: thickness variation within the batch (different cycle counts in different positions → chamber non-uniformity), composition variation (TMA or H₂O delivery anomaly), or incomplete coverage (graphite frame shadowing wafer edges)."
+      }
+    ]
   }
 ];

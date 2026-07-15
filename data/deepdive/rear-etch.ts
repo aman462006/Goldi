@@ -131,6 +131,26 @@ export const rearEtchDeepDive: DeepDiveSlide[] = [
     ]
   },
   {
+    type: "table",
+    title: "Rear Etch Process Parameters",
+    subtitle: "SPC Control Points and Industrial Targets",
+    headers: ["Parameter", "Value / Range", "Consequence of Deviation"],
+    rows: [
+      ["Inline HF concentration (Kzone)", "~0.5–2 wt%", "Too low → BSG not fully removed → tunnel oxide nucleates on glass, not silicon"],
+      ["Kzone conveyor speed", "Calibrated m/min", "Too fast → insufficient HF contact time; too slow → over-etching front texture"],
+      ["Water film flow (rear protection)", "Continuous, calibrated", "Film break → HF contacts rear poly-Si stack → catastrophic damage"],
+      ["Alkaline NaOH concentration", "1–5 wt% (proprietary formulation)", "Too low → incomplete poly-Si and edge junction removal; too high → front emitter damage"],
+      ["Alkaline temperature", "60–75 °C", "Higher temperature accelerates all reactions — tightens the selectivity window"],
+      ["Alkaline immersion time", "Controlled by weight loss", "Under-etch → shunting; over-etch → emitter damage"],
+      ["Weight loss target (alkaline polish)", "0.21 ± 0.03 g (control)", "Direct measure of silicon removed from rear; tight control ensures consistent tunnel oxide starting surface"],
+      ["Rear reflectance target", "> 37.9% (control)", "Mirror-like surface for IR photon recycling; below target → surface still rough (incomplete polish)"],
+      ["Hydrophobicity test", "Water must bead fully on rear", "Spreading water = BSG residue = failed HF step → LPCVD tunnel oxide nucleates on glass"],
+      ["Final HF dip concentration", "~0.5–1 wt%", "Removes native oxide grown after alkaline step; leaves hydrogen-terminated surface"],
+      ["DI water rinse resistivity", "> 15 MΩ·cm", "Ensures ionic contamination from chemicals is fully flushed before drying"],
+      ["Slow-pull speed", "Controlled mm/s", "Too fast → water drags particles onto surface; too slow → native oxide grows during prolonged air exposure"],
+    ],
+  },
+  {
     type: "content",
     title: "The Slow-Pull Station",
     subtitle: "Precision Drying for Tunnel Oxide Control",
@@ -146,6 +166,37 @@ export const rearEtchDeepDive: DeepDiveSlide[] = [
       {
         label: "The Resulting Surface",
         text: "The output is a hydrophobic, hydrogen-terminated silicon surface with minimal and well-controlled native oxide. Any non-uniformity introduced here would propagate directly into the tunnel oxide quality and degrade the TOPCon passivated contact — making the slow-pull station a precision quality step despite looking like a simple rinse."
+      }
+    ]
+  },
+  {
+    type: "faq",
+    title: "Frequently Asked Questions",
+    subtitle: "Interview Preparation & Technical Deep Dive",
+    questions: [
+      {
+        q: "Why must the rear surface be polished flat for TOPCon but the front is left textured?",
+        a: "The front texture traps light — pyramids give photons multiple chances to enter the silicon. The rear serves a completely different function: it must be a perfectly uniform electrical contact. The tunnel oxide grown on the rear must be 1.5–2.0 nm thick everywhere. On a textured surface with 1–5 µm pyramids, the oxide would be thicker in valleys (slower growth) and thinner at sharp tips (higher field, faster growth) — quantum tunneling probability varies exponentially with oxide thickness, so even 0.3 nm variation translates to an order-of-magnitude difference in tunneling current across the surface. A polished rear ensures uniform oxide and uniform tunneling everywhere."
+      },
+      {
+        q: "Why can't we use the same chemical (KOH/HF) for both the front and rear etch in one bath?",
+        a: "The front and rear need opposite treatments simultaneously: the front must preserve its textured pyramids while the rear needs its texture polished flat. In a single immersion bath, both sides are exposed equally. The protective additive chemistry (protective groups adsorb onto SiO₂ on the front, polishing groups accelerate Si attack on the rear) is the solution — but this only works in a specifically formulated alkaline bath, not in HF. The HF Kzone uses the water-film approach (physical separation) while the alkaline tank uses chemical selectivity (molecular selectivity by additive type). Each mechanism works for one chemistry, not both."
+      },
+      {
+        q: "What is 'specular reflectance' vs 'diffuse reflectance' and which does the rear require?",
+        a: "Specular reflectance (mirror-like) reflects light at a predictable angle — the angle of incidence equals the angle of reflection. Diffuse reflectance scatters light in random directions (Lambertian distribution). The rear of a TOPCon cell requires specular (mirror) reflectance above 37.9% to send long-wavelength IR photons back through the cell for a second absorption pass. If the rear were diffusely scattering, most photons would exit through the front at angles beyond the critical angle of silicon (16.8°) — most photons escape rather than being totally internally reflected back. The polished mirror rear guarantees specular reflection and thus photon recycling."
+      },
+      {
+        q: "What is 'edge isolation' and why does the rear etch provide it?",
+        a: "After boron tube diffusion, boron gas wraps around the wafer edges and deposits a thin p-type layer on both the edges and rear surface. This p-type layer connects the front p-type emitter to the rear n-type base, creating a short circuit path around the edge — any voltage built up in the cell would simply drive current around the perimeter rather than through the external circuit. The alkaline polish in the rear etch step removes silicon from both the rear face and the wafer edge, physically removing the p-type edge layer. This breaks the short circuit and is called 'edge isolation.' Incomplete edge isolation shows as low shunt resistance (Rsh) in final electrical testing."
+      },
+      {
+        q: "What does 'hydrophobic' surface mean chemically and why is it the pass criterion?",
+        a: "A hydrophobic silicon surface is covered with Si–H bonds (hydrogen termination). These bonds form when HF etches the SiO₂: SiO₂ + 6HF → H₂SiF₆ + 2H₂O, leaving bare Si with H atoms attached. Si–H is non-polar and repels water. A hydrophilic surface has Si–OH groups (from SiO₂) that attract water molecules via hydrogen bonding, causing water to spread. The hydrophobic test (water beads off) confirms that all SiO₂ has been removed and the silicon surface is hydrogen-terminated, clean, and ready for the LPCVD tunnel oxide step. Any residual SiO₂ from BSG incompletely removed would show as a hydrophilic patch where water spreads."
+      },
+      {
+        q: "What would happen if the rear polish removed too much silicon (over-polish)?",
+        a: "The rear polish targets 0.21 ± 0.03 g of silicon removal. Over-polish (weight loss too high) means: (1) the alkaline bath may have begun attacking the n-type wafer bulk rather than just the BSG/p-type layer at the surface — reducing the effective wafer thickness slightly; (2) if very severe, it could thin the wafer beyond mechanical tolerance, increasing breakage risk in later steps; (3) the surface may have become re-textured (rough polished) rather than specularly polished, reducing rear IR reflectance below the 37.9% target. The alkaline concentration and temperature are the primary levers if weight loss trends too high."
       }
     ]
   }

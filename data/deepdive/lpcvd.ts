@@ -406,5 +406,60 @@ export const lpcvdDeepDive: DeepDiveSlide[] = [
         text: "Fully sealed, dedicated gas delivery lines with no joints in confined spaces. Continuous gas leak detectors with automatic shutoff valves on alarm. Strict PPE including full-face respirators and chemical-resistant clothing. The final purge step before tube opening is a mandatory safety operation — it ensures no residual SiH₄ can contact air during wafer unloading."
       }
     ]
+  },
+  {
+    type: "table",
+    title: "LPCVD Complete Parameter Reference",
+    subtitle: "Tunnel Oxide + Poly-Si Industrial Specifications",
+    headers: ["Parameter", "Target / Range", "Effect of Deviation"],
+    rows: [
+      ["Oxidation temperature", "500–700 °C", "Too low → slower oxide growth, risk of pinholes; too high → dopants in substrate redistribute"],
+      ["Tunnel oxide target thickness", "1.9–2.1 nm", "< 1.5 nm → pinholes, poor passivation; > 2.5 nm → tunneling stops, high contact resistance"],
+      ["Poly-Si deposition temperature", "590–630 °C", "< 580 °C → amorphous Si (higher resistance); > 650 °C → columnar grains, rough surface"],
+      ["Chamber pressure", "200–300 mTorr", "Lower → better uniformity; too low → deposition rate drops uneconomically"],
+      ["SiH₄ flow rate", "Controlled sccm", "Higher flow → faster deposition but more non-uniformity across 150-wafer boat"],
+      ["Deposition rate", "1–5 nm/min", "Too fast → non-uniform thickness along tube length"],
+      ["Target poly-Si thickness", "~130–150 nm (burgundy colour)", "Thinner → high sheet resistance after POCl₃; thicker → mechanical stress on quartz"],
+      ["Sheet resistance after POCl₃", "32–62 Ω/□", "Higher → resistive poly-Si contact; lower → Auger recombination or over-doping"],
+      ["N₂ purge time (safety)", "Full purge before opening", "Insufficient purge → SiH₄ in tube contacts air → pyrophoric fire"],
+      ["Tube leak rate", "< 1.5 Pa/min", "Air ingress oxidises silicon surface non-uniformly; O₂ trace creates unwanted SiO₂"],
+      ["Quartz boat replacement", "By Si buildup thickness", "Excessive Si on boat cracks quartz from thermal mismatch → particles on wafers"],
+      ["Colour check (visual)", "Burgundy / dark red-brown", "Pink = under-thick (~115 nm); jade-green = very thin (~80 nm); any mismatch → immediate measurement"],
+    ],
+  },
+  {
+    type: "faq",
+    title: "Frequently Asked Questions",
+    subtitle: "Interview Preparation & Technical Deep Dive",
+    questions: [
+      {
+        q: "What is quantum tunneling and why does it only work when the oxide is below ~2 nm?",
+        a: "Quantum tunneling is a quantum-mechanical phenomenon where particles cross energy barriers they classically cannot surmount. Electrons have wave-like properties — their quantum wave function extends through the barrier with an amplitude that decays exponentially with distance. The tunneling probability T ∝ exp(−2κd), where κ depends on barrier height (~3.1 eV for Si/SiO₂) and d is barrier thickness. At d = 1.5 nm, T ≈ 0.1–1% per attempt; at d = 3 nm, T drops by several orders of magnitude; at d > 5 nm, T ≈ 0 for practical purposes. Since billions of electrons attempt tunneling per second, 0.1% probability still yields substantial current at 1.5 nm. Thick oxides simply have too many orders of magnitude of suppression — the contact becomes essentially open circuit."
+      },
+      {
+        q: "Why does polysilicon conduct current much better than amorphous silicon for the TOPCon contact?",
+        a: "Polysilicon (crystalline grains with grain boundaries) conducts via two mechanisms: (1) Intra-grain transport through the crystalline lattice — same as monocrystalline silicon; (2) Grain boundary diffusion — grain boundaries are actually transport highways for dopants and to some extent for carriers. When heavily doped with phosphorus (n⁺), the grain boundaries are heavily doped too, providing conduction paths even where grain boundaries would normally be trapping regions. Amorphous silicon lacks long-range crystalline order — carrier transport is by hopping between localised states — giving 100–1000× higher resistivity than poly-Si at the same doping level."
+      },
+      {
+        q: "What is the 'Back Surface Field' (BSF) and how does the n/n⁺ junction create it?",
+        a: "When two silicon regions of the same type (both n-type) but different doping concentrations are in contact, a built-in potential forms at the interface. The n⁺ poly-Si side has ~10²⁰ cm⁻³ donors while the n-wafer bulk has ~10¹⁵ cm⁻³. Electrons diffuse from n⁺ toward n, leaving behind fixed positive donor ions in the n⁺ region and creating a potential barrier. For minority carriers (holes) trying to reach the rear contact, this barrier is repulsive — holes are pushed back toward the front junction. The effective rear surface recombination velocity drops from thousands of cm/s to <10 cm/s, directly raising Voc by 10–30 mV."
+      },
+      {
+        q: "Why must the tunnel oxide and poly-Si be deposited in the same LPCVD tube without breaking vacuum?",
+        a: "Between the tunnel oxide growth and poly-Si deposition, the silicon surface must never be exposed to atmosphere. Even brief air exposure at room temperature grows a native oxide (SiO₂) of uncontrolled thickness (0.5–2 nm) over the intentional tunnel oxide. This stacks a second oxide on top of the first, increasing total oxide thickness beyond the tunneling cutoff. Additionally, atmospheric moisture and organics contaminate the silicon-oxide interface, creating defect traps that worsen passivation. The LPCVD system grows the tunnel oxide in Stage 1 and immediately switches to silane for poly-Si in Stage 2 without ever opening the tube — guaranteeing the interface remains pristine."
+      },
+      {
+        q: "How does the poly-Si film colour change with thickness and why is this physically?",
+        a: "Poly-Si is a transparent-to-visible-light thin film on silicon. Thin-film optical interference creates structural colour: light reflected from the top poly-Si surface and from the poly-Si/tunnel-oxide/silicon interface stack interferes constructively or destructively at different wavelengths depending on film thickness. At ~115 nm poly-Si, the interference maximum falls in green-yellow wavelengths → pink appearance (green reflected). At ~130 nm, interference shifts to give dark red-brown (burgundy). At ~80 nm, jade-green. Operators use colour as a fast, non-contact, zero-cost thickness indicator. Precise measurement (to ±0.1 nm tunnel oxide, ±5 nm poly) is done by ellipsometry on test wafers."
+      },
+      {
+        q: "What happens if the final N₂ purge before tube opening is skipped or shortened?",
+        a: "Silane (SiH₄) remaining in the tube after deposition would contact air when the tube is opened. SiH₄ is pyrophoric — it auto-ignites at ~40°C on contact with O₂. Even small residual concentrations (SiH₄ LEL is 1.4% in air) can cause a flash fire. This is not a theoretical risk — SiH₄ fires have injured workers in the semiconductor industry and caused equipment damage. The purge is a mandatory safety-critical step in the recipe; operators are trained to never interrupt or skip it. Monitoring instruments verify purge completion by measuring residual SiH₄ concentration at the exhaust before the tube is cleared for opening."
+      },
+      {
+        q: "Why are quartz boats and tubes prone to cracking in LPCVD and how is this managed?",
+        a: "Quartz (SiO₂) has a thermal expansion coefficient (CTE) of ~0.55 ppm/°C. Poly-Si deposits on the quartz boat and tube surfaces as well as the wafers. Silicon CTE is ~2.6 ppm/°C — nearly 5× higher. During each thermal cycle (room temperature → 600°C → room temperature), the silicon film wants to expand and contract much more than the quartz underneath. Over hundreds of cycles, the mismatch stress accumulates. When stress exceeds fracture toughness, the quartz cracks — often catastrophically in mid-process, releasing quartz particles onto wafers. Management: track silicon film buildup thickness on quartz parts by weight or optical measurement; predictively replace boats before the critical stress threshold. Some lines use a protective SiO₂ buffer deposit on boats before each batch to partially relieve interfacial stress."
+      }
+    ]
   }
 ];

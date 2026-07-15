@@ -138,5 +138,54 @@ export const frontEtchDeepDive: DeepDiveSlide[] = [
         text: "Engineers must hit a narrow operating window — enough chemistry to completely remove all unwanted layers and break the edge conduction path, but not so aggressive that good layers are damaged. Weight loss measurement (must be above 0.6 g), front hydrophobicity testing (water must bead), and SPC monitoring of sheet resistance are the three control tools used to stay in this window every batch."
       }
     ]
+  },
+  {
+    type: "table",
+    title: "Front Etch Process Parameters",
+    subtitle: "SPC Control Points and Industrial Specifications",
+    headers: ["Parameter", "Value / Range", "Consequence of Deviation"],
+    rows: [
+      ["HF roller concentration (PSG removal)", "~0.5–2 wt%", "Too low → glass not dissolved; too high → texture damage risk"],
+      ["Water film volume (rear protection)", "Continuous flow, calibrated", "Insufficient flow → HF reaches rear poly-Si → irreversible stack damage"],
+      ["Alkaline NaOH concentration", "2–5 wt% + additive", "Too low → incomplete poly removal and edge junction left intact; too high → emitter etched"],
+      ["Alkaline temperature", "25–40 °C", "Higher temperature increases all reaction rates — shrinks the selectivity window significantly"],
+      ["Total weight loss target", "> 0.6 g", "Below target → parasitic poly not removed → shunting; upper limit prevents emitter damage"],
+      ["Front sheet resistance (post-etch)", "Within boron diffusion spec", "Rising Rs indicates OH⁻ has etched into emitter — process stop required"],
+      ["Hydrophobicity check (front)", "Water must bead fully", "Spreading = residual oxide (PSG/BSG) remains → ALD fails to bond to silicon"],
+      ["Roller replacement cycle", "Fixed schedule", "Contaminated rollers → roller marks in EL imaging → bin losses or scrap"],
+      ["Conveyor speed", "Calibrated m/min", "Too fast → insufficient chemical contact time; too slow → over-etch risk at front surface"],
+      ["DI water rinse quality", "> 15 MΩ·cm", "Ionic contamination in rinse leaves electrostatic traps at surface"],
+    ],
+  },
+  {
+    type: "faq",
+    title: "Frequently Asked Questions",
+    subtitle: "Interview Preparation & Technical Deep Dive",
+    questions: [
+      {
+        q: "Why can't the ALD Al₂O₃ be deposited directly on top of the PSG without removing it first?",
+        a: "ALD Al₂O₃ would deposit on the PSG glass surface, not on silicon. The Al₂O₃–glass interface has very different electronic properties than the Al₂O₃–silicon interface: (1) the fixed negative charge in Al₂O₃ requires intimate contact with the silicon valence band states to induce field-effect passivation — the glass acts as an insulating buffer that eliminates this benefit; (2) the chemical passivation (Al–O bonding to Si dangling bonds) cannot happen through a glass intermediate layer; (3) moisture absorbed by the hygroscopic PSG glass would be trapped under the ALD layer, continuously degrading the Al₂O₃ quality and causing long-term power loss. Effective ALD passivation requires bare, clean silicon as the starting surface."
+      },
+      {
+        q: "Why does HF etch glass (SiO₂) but not silicon? What is the chemistry?",
+        a: "HF attacks the Si–O polar bonds in SiO₂ through a nucleophilic substitution: SiO₂ + 6HF → H₂SiF₆ + 2H₂O. Fluoride (F⁻) is a powerful nucleophile that attacks the electropositive silicon center in Si–O bonds, displacing oxygen. The product H₂SiF₆ (fluorosilicic acid) is soluble and washes away. Silicon metal (Si–Si bonds) has no oxygen for F⁻ to displace — the non-polar Si–Si bond is not attacked. Without an oxidising agent to first convert Si to SiO₂, HF has essentially no reaction with silicon. The selectivity ratio exceeds 1000:1 (SiO₂ etch rate vs. Si etch rate), making HF essentially a perfectly selective glass remover."
+      },
+      {
+        q: "What is the water film protection mechanism and what breaks it?",
+        a: "A continuous flowing film of DI water is maintained on the rear (TOPCon) face of the wafer as it rides on rollers over the HF bath. Surface tension holds the water film against the rear face. The film pH is alkaline (or near neutral) — HF is rapidly neutralised in the water film before it can reach the rear surface. Film disruption causes: (1) insufficient water flow rate; (2) surfactant contamination reducing surface tension; (3) wafer defects like chips or warping allowing the film to break; (4) excessive wafer speed pulling the film off. If the film breaks, HF contacts the rear poly-Si stack — which HF cannot selectively etch — but it can attack the tunnel oxide and begin dissolving the SiO₂ layers. Recovery requires full lot evaluation and the affected wafers must be scrapped."
+      },
+      {
+        q: "What causes 'white spots' after PECVD and how does the front etch step cause them?",
+        a: "White spots are regions where the PECVD SiNx:H film has different optical properties — the interference colour shifts to white rather than the target dark blue. They arise when PSG or BSG glass residue remains on the silicon surface after front etch. When PECVD deposits SiNx on glass islands rather than bare silicon, the film grows differently (different nucleation, different density, slightly different composition). The optical constants (refractive index, thickness) differ slightly over glass vs. silicon, and the interference colour shifts to white. Prevention: ensure HF concentration is adequate, roller wetting is complete, and the water film on the rear is never disrupted (no front surface getting re-etched and re-dirtied)."
+      },
+      {
+        q: "Why is weight loss the primary SPC metric for front etch rather than a direct chemical test?",
+        a: "Weight loss directly measures how much material was removed from the wafer — it integrates the total effect of all three chemical stages. A direct chemical test (checking HF concentration, NaOH concentration) tells you the bath is prepared correctly but not that it actually did the job — bath concentration can be right but the time, temperature, or wafer loading could cause under-etch. Weight loss is the outcome metric. Target: >0.6 g total (this includes PSG dissolution + parasitic poly-Si removal + some emitter surface removal). Below 0.6 g means the process stopped before completing — regardless of what the bath concentrations said."
+      },
+      {
+        q: "What is 'edge current leakage' and how does it appear in final electrical testing?",
+        a: "If the front etch is incomplete, some of the n-type parasitic poly-Si layer remains at the wafer edges, bridging the front p-type emitter to the rear n-type base. This creates a low-resistance conductive path around the perimeter of the cell. When voltage is applied across the cell, current prefers this short path at the edge rather than flowing through the external circuit. Electrically, this appears as: low shunt resistance (Rsh) in the I-V measurement (the I-V curve has a non-zero slope near Isc, showing current leaking backward); visible dark areas at all four edges in EL imaging (less current available to re-emit in the edge regions); and potentially a humped I-V shape at low voltage. Fix: re-evaluate the front etch chemistry and increase the alkaline treatment."
+      }
+    ]
   }
 ];

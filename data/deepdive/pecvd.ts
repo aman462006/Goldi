@@ -235,6 +235,25 @@ export const pecvdDeepDive: DeepDiveSlide[] = [
     ]
   },
   {
+    type: "table",
+    title: "PECVD Process Parameter Reference",
+    subtitle: "SiNx:H Industrial Specifications",
+    headers: ["Parameter", "Value / Range", "Why It Matters"],
+    rows: [
+      ["Process gases", "SiH₄, NH₃, N₂ (H₂ sometimes)", "SiH₄ provides Si; NH₃ provides N and H; N₂ carrier reduces deposition rate for control"],
+      ["SiH₄ : NH₃ flow ratio", "Tuned for n ≈ 1.9–2.1", "Higher SiH₄/NH₃ → more Si-rich film, higher n (yellow/gold colour); lower ratio → N-rich, n → 1.8 (light blue)"],
+      ["RF power frequency", "13.56 MHz or 40 kHz (dual)", "High frequency → denser, harder film; low frequency → softer film with more hydrogen content"],
+      ["Deposition temperature", "200–450 °C", "< 200 °C → poor film quality, less hydrogen in film; > 450 °C → damages boron diffusion profile"],
+      ["Target SiNx thickness (front)", "~70–80 nm", "Quarter-wavelength ARC optimised for ~600 nm: d = λ/(4n) = 600/(4×2.0) = 75 nm"],
+      ["Refractive index target", "n = 2.0 ± 0.05", "Directly sets ARC performance; deviation shifts the reflectance minimum wavelength"],
+      ["Deposition rate", "5–20 nm/min", "Controlled by gas flows and RF power; too fast → less uniform; too slow → throughput bottleneck"],
+      ["Hydrogen content in film (H)", "10–20 at%", "Reservoir for bulk passivation during firing; too low → poor bulk passivation; too high → poor film stability"],
+      ["Target reflectance (post PECVD)", "< 2% (weighted solar spectrum)", "Direct cell efficiency indicator; above 2% indicates ARC thickness or refractive index deviation"],
+      ["Graphite boat replacement cycle", "Per Al₂O₃ buildup schedule", "Changed boat geometry → altered gas flow → colour variation between positions"],
+      ["NH₃ purity", "> 99.999% (5N)", "Moisture or O₂ impurity in NH₃ creates oxide inclusions in SiNx film → poor passivation"],
+    ],
+  },
+  {
     type: "content",
     title: "White Spots and Colour Variation",
     subtitle: "Diagnosing PECVD Appearance Defects",
@@ -250,6 +269,41 @@ export const pecvdDeepDive: DeepDiveSlide[] = [
       {
         label: "Prevention and Response",
         text: "For white spots: enforce upstream quality gates — do not transfer non-conforming wafers from front etch to PECVD. For colour variation: verify gas flows and chamber pressure at each shift start; replace graphite boats on their scheduled replacement cycle; check wafer seating before each load. Both defect types are detected by AOI and the visual colour check at the unloader."
+      }
+    ]
+  },
+  {
+    type: "faq",
+    title: "Frequently Asked Questions",
+    subtitle: "Interview Preparation & Technical Deep Dive",
+    questions: [
+      {
+        q: "Why is SiNx:H used as an ARC instead of MgF₂, ZnS, or other ARC materials used in high-efficiency lab cells?",
+        a: "MgF₂ and ZnS are used in lab cells and III-V space solar cells where cost is secondary to performance. In silicon PV at scale, SiNx:H wins because: (1) it provides passivation AND ARC simultaneously in one step — no separate passivation layer needed; (2) it acts as a hydrogen reservoir for bulk passivation during the firing step; (3) it is mechanically robust and chemically stable over 30 years outdoors; (4) PECVD is fast (5–20 nm/min) and can coat hundreds of wafers per hour in batch inline systems; (5) silicon nitride chemistry is well-understood and equipment is mature. TiO₂ is another candidate (good optical properties, no passivation) but fails on points 2, 3, and passivation. SiNx is simply the only material that scores high on all five criteria simultaneously."
+      },
+      {
+        q: "What is the relationship between refractive index (n), film thickness, and cell colour?",
+        a: "The SiNx film creates thin-film optical interference. The minimum reflectance condition is: n × d = λ/4, where λ is the target wavelength. For n = 2.0 and target λ = 600 nm (peak solar spectrum): d = 75 nm → minimum reflection at 600 nm means red and blue light reflect more than green → cell appears dark blue/black. If n increases to 2.2 (more Si-rich): d_optimal shortens → some films end up slightly thicker-than-optimal → interference minimum shifts → cell may appear golden or yellow. If n decreases to 1.85 (more N-rich): d_optimal increases → lighter blue. AOI in colour-sorting mode measures HSV (hue, saturation, value) and bins cells into colour grades — within a module, all cells must be the same colour grade or the panel looks non-uniform on a rooftop."
+      },
+      {
+        q: "How does PECVD provide bulk passivation if the SiNx film is only on the surface?",
+        a: "During firing (the screen-printing firing step at ~780°C peak for 1–3 seconds), the Si–H and N–H bonds in the SiNx film begin to break. Hydrogen atoms released from the breaking bonds are small enough (1 pm atomic radius) to rapidly diffuse through both silicon and SiNx. In 1–3 seconds at 780°C, hydrogen can diffuse several micrometers into silicon — effectively reaching the entire ~150 µm wafer thickness. Inside the bulk, atomic H bonds to 'broken' or dangling bonds associated with crystal dislocations, metal impurity complexes (Fe–B pairs, Cu clusters), and grain boundaries. This neutralises their charge-trapping nature. Post-firing, minority carrier lifetime in the wafer bulk increases by 2–10× compared to pre-firing, measurable by PL imaging."
+      },
+      {
+        q: "Why must the PECVD step come AFTER ALD and not before?",
+        a: "The SiNx:H PECVD film must be deposited on top of the ALD Al₂O₃ layer for two reasons: (1) Structure — the stack is Si / Al₂O₃ (passivation) / SiNx (protection + ARC + H-source). If PECVD came first, SiNx would be directly on silicon — losing the superior Al₂O₃ passivation at the Si/oxide interface. (2) The ALD process uses TMA and H₂O which react with Si-OH surface groups — it requires a clean silicon-oxide surface. If PECVD SiNx were deposited first, ALD precursors would react with Si–N bonds at the SiNx surface, not the Si surface — the ALD Al₂O₃ would grow on SiNx, not silicon, eliminating field-effect passivation. The correct sequence is thermodynamically and chemically mandatory."
+      },
+      {
+        q: "What is the 'dual-frequency' PECVD mode and what does it achieve?",
+        a: "Standard PECVD uses 13.56 MHz RF (high frequency). Dual-frequency adds a second, lower frequency (40 kHz or 350 kHz) RF signal. The high-frequency signal controls electron temperature and plasma density. The low-frequency signal controls ion bombardment energy — ions accelerate more strongly in a slow-oscillating field. Benefits of low-frequency ion bombardment: (1) more compact, denser SiNx film (better diffusion barrier for moisture ingress over 30 years); (2) better adhesion of the film to the Al₂O₃ interface; (3) more complete H coverage of remaining Si dangling bonds at the interface. Disadvantage: ion bombardment at too-high power damages the underlying Al₂O₃ and silicon surface. Most advanced TOPCon lines use dual-frequency PECVD with carefully optimised power ratio between the two frequencies."
+      },
+      {
+        q: "What does nitrogen (N₂) as a carrier gas do in PECVD and what happens if it leaks in large quantities?",
+        a: "N₂ acts as a diluent carrier gas — it doesn't react in the plasma but controls the dilution of SiH₄ and NH₃, allowing finer control of deposition rate. It also helps stabilize the plasma discharge. In large quantities, however, N₂ is an asphyxiant: it displaces oxygen from enclosed spaces with no smell, colour, or warning. At O₂ levels below 19.5% (normal air is 20.9%), a person loses consciousness within seconds. PECVD areas use N₂ in high flow rates for carrier gas, chamber purging, and cassette N₂-blanketing. O₂ deficiency monitors with audible alarms must be installed at floor level (where N₂ accumulates, being slightly heavier than air) throughout the PECVD tool area. Entry into a low-O₂ alarm zone without SCBA is prohibited."
+      },
+      {
+        q: "How does the firing step activate the SiNx:H and what would happen if firing were skipped?",
+        a: "The SiNx:H as-deposited has hydrogen stored in Si–H and N–H bonds within the film matrix. Without firing (heating), this hydrogen remains locked in the film — it cannot diffuse into the silicon to passivate bulk defects. The Al₂O₃ negative fixed charge is also at sub-optimal density before thermal activation. If firing were skipped: bulk minority-carrier lifetime would remain at its pre-passivation value (sometimes 50–100× lower); Al₂O₃ field-effect passivation would be weaker; Voc would be 30–80 mV lower; cell efficiency would drop 1–2% absolute. Since screen printing and firing happen after PECVD anyway (for metallisation), the firing step always occurs in practice — but its role as a passivation activation step is often overlooked."
       }
     ]
   }

@@ -77,7 +77,7 @@ export type ProcessStep = {
 };
 
 export type DeepDiveSlide = {
-  type: "hero" | "content" | "split" | "stats" | "table" | "comparison" | "steps" | "safety" | "visual";
+  type: "hero" | "content" | "split" | "stats" | "table" | "comparison" | "steps" | "safety" | "visual" | "faq";
   title: string;
   subtitle?: string;
   tagline?: string;
@@ -94,6 +94,7 @@ export type DeepDiveSlide = {
   comparison?: Array<{ name: string; badge?: string; color: string; points: string[] }>;
   callout?: { label: string; text: string };
   steps?: Array<{ n: string; title: string; text: string }>;
+  questions?: Array<{ q: string; a: string }>;
   note?: string;
   warning?: string;
 };

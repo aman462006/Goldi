@@ -184,5 +184,64 @@ export const testDeepDive: DeepDiveSlide[] = [
         text: "Because every process step contributes multiplicatively to final efficiency, no single step can be treated as unimportant. SPC keeps each step operating at its optimal target with early-warning detection of drift. PFMEA quantifies the risk (RPN = Severity × Occurrence × Detection) so engineering resources are directed at the steps where failures are most severe, most likely, and hardest to detect. Together, they ensure that the full chain — texturing through testing — operates within the narrow window that produces commercial cells above the efficiency threshold."
       }
     ]
+  },
+  {
+    type: "table",
+    title: "Final Test Parameter Reference",
+    subtitle: "Standard Test Conditions and Key Metrics",
+    headers: ["Parameter", "Value / Target", "Significance"],
+    rows: [
+      ["Standard Test Condition (STC)", "1000 W/m², AM1.5G, 25°C cell temp", "Universal benchmark — all cells worldwide compared at identical conditions"],
+      ["Flash duration", "5–20 ms xenon flash", "Short enough to avoid cell heating during measurement; long enough for stable I-V sweep"],
+      ["Commercial TOPCon η", "24.0–25.5% (production average)", "Current state-of-the-art; world record 27.79% (JinkoSolar, ISFH, 2025)"],
+      ["Voc typical range", "720–740 mV", "Higher Voc = better passivation and lower J₀; PERC Voc typically 680–690 mV"],
+      ["Isc typical range", "13.5–14.5 A (M10 wafer)", "Higher Isc = better ARC and less surface recombination"],
+      ["Fill Factor target", "82–85%", "Limited by Rs (high → lower FF) and Rsh (low → lower FF)"],
+      ["Series resistance (Rs) target", "< 2.0 mΩ·cm²", "Higher Rs from poor contact formation; reduces FF by ~1% per 0.5 mΩ·cm² increase"],
+      ["Shunt resistance (Rsh) target", "> 200 Ω·cm²", "Lower Rsh from shunting; reduces Voc and FF simultaneously"],
+      ["EL forward bias voltage", "~0.5–0.6 V (Vmpp)", "Mimics operating condition; Ag crystallite quality and junction integrity revealed"],
+      ["PL wavelength", "~1100 nm (emitted by Si)", "Below-bandgap emission from radiative recombination; maps minority carrier lifetime"],
+      ["CID test condition", "110 °C, 0.5 A, 8 hours", "Accelerated stress for n-type carrier-induced degradation; target < 0.6% average"],
+      ["Bifaciality factor", "75–85% (TOPCon)", "Rear Isc / Front Isc × 100%; higher = more energy from bifacial installation"],
+    ],
+  },
+  {
+    type: "faq",
+    title: "Frequently Asked Questions",
+    subtitle: "Interview Preparation & Technical Deep Dive",
+    questions: [
+      {
+        q: "What is Standard Test Condition (STC) and why must every measurement use it?",
+        a: "STC is a universally agreed reference condition: 1000 W/m² irradiance with the AM1.5G spectrum (the solar spectrum filtered through 1.5 atmospheres of air at 37.5° latitude), and a cell temperature of exactly 25°C. Solar cell efficiency varies with: (1) irradiance — linearly proportional to Isc; (2) temperature — Voc decreases ~2 mV/°C and efficiency drops 0.3–0.4%/°C for TOPCon (the temperature coefficient); (3) spectrum — different cell types have different spectral responses. Without a common reference, a cell measured on a hot day in India would show much lower efficiency than the same cell measured in a cold lab — making global commercial comparison impossible. Every certified cell datasheet, every power purchase agreement, and every module warranty is referenced to STC."
+      },
+      {
+        q: "Why does electroluminescence (EL) reveal defects that cannot be seen optically or by four-point probe?",
+        a: "EL uses the cell itself as a spatially resolved recombination map. When forward-biased, each local region emits IR photons proportional to the local carrier injection level. Areas with high-quality semiconductor and good contacts emit brightly (long carrier lifetime, low recombination). Defective areas emit dimly or not at all: (1) microcracks break the local circuit, so no current flows in that line → dark line; (2) shunts divert current before it reaches surrounding areas → surrounding region appears dark; (3) metal-free areas where current must spread laterally through thin poly-Si → appear slightly dimmer if sheet resistance is high. Four-point probe cannot spatially locate which finger broke. Optical inspection cannot see sub-surface microcracks. EL sees all three with millimetre spatial resolution across the entire 210 mm cell in one image."
+      },
+      {
+        q: "What is the difference between Irev1 and Irev2 and what do they indicate about cell quality?",
+        a: "Irev1 is the reverse leakage current measured at −10 V applied voltage; Irev2 at −12 V. At these large reverse biases, avalanche breakdown or shunting causes current to flow backward through any weak points in the junction. Low Irev (< 1–2 A) indicates the junction is defect-free and no shunt paths exist. High Irev indicates: metallic shunt paths (silver spikes), edge conduction from incomplete isolation, or crystal defects that act as localized avalanche sites. Irev measurements are extremely sensitive to cell quality — they can detect shunts that don't appear in standard I-V measurements at the working voltage range. High Irev1/Irev2 values correlate with PID (potential-induced degradation) susceptibility and predict higher degradation rates in field conditions where high negative voltages appear across cells in a string."
+      },
+      {
+        q: "What is TOPCon's Carrier-Induced Degradation (CID) and why is it unique to n-type cells?",
+        a: "CID occurs when simultaneous carrier injection (from light or forward current) and elevated temperature activate latent defects in the silicon bulk. In n-type silicon, the primary mechanism is hydrogen-related: interstitial hydrogen that is electrically neutral under normal conditions becomes trapped at crystal defects (e.g., vacancy clusters, metal-H complexes) forming recombination-active defect complexes. This only occurs under simultaneous injection + heat — neither alone is sufficient. P-type PERC cells suffer LID (boron-oxygen complexes form under light + heat, degrading by 1–3% in first hours), but LID is irrelevant for n-type silicon which has no boron-oxygen pathways. N-type cells are essentially LID-immune but can suffer CID instead. The HOC-CID test (110°C, 0.5 A forward bias, 8 hours) is the accelerated stress protocol to certify that CID remains within acceptable bounds (<0.6% average efficiency loss)."
+      },
+      {
+        q: "Why is bifaciality measured and what determines the bifaciality factor for TOPCon?",
+        a: "Bifaciality (η_rear/η_front × 100%) is commercially critical because bifacial modules are installed over reflective ground (white gravel, concrete, snow) and collect diffuse ground-reflected light from the rear. A 75% bifaciality factor means 750 W/m² on the rear surface generates the same current as 1000 W/m² on the front — in the field, this can increase annual energy yield by 10–30% over a monofacial equivalent. TOPCon naturally has high bifaciality (75–85%) because: (1) the rear is passivated contact rather than full-area aluminium BSF — no opaque metal blocking rear light; (2) the n⁺ poly-Si contact fingers cover only 3–5% of rear area; (3) SiNx on the rear provides ARC function for rear-incident light. To increase bifaciality further, rear contact coverage must be minimized — a design tradeoff against Rs."
+      },
+      {
+        q: "How do pull-force tests predict field reliability and what failure modes do they catch?",
+        a: "The pull-force test attaches a fixture to the silver busbar and measures the force required to peel it from the cell. Target: average ≥ 1 N per point, minimum ≥ 0.8 N. Low pull force indicates: (1) insufficient glass frit penetration — the contact is silver-on-glass rather than Ag crystallites on silicon; (2) contaminated silicon surface (PSG/BSG residue not removed) — the frit reacted with glass residue instead of silicon; (3) firing temperature too low. In the field, low pull-force contacts delaminate when module ribbons expand and contract thermally over 30 years (cycling from −40°C to +85°C). A delaminated contact = broken circuit = loss of string current. Modules with low pull-force cells fail early in accelerated thermal cycling tests (IEC 61215 standard) before ever being shipped."
+      },
+      {
+        q: "What is PID (Potential-Induced Degradation) and why are TOPCon cells more resistant than PERC?",
+        a: "PID occurs when large voltage potentials (up to −1500 V in large string installations) drive leakage current through the module encapsulant and glass into the cell junction. In PERC, sodium ions from the glass migrate through the EVA encapsulant and SiNx anti-reflection coating into the silicon surface, creating defect traps — efficiency can drop 20–80% under worst-case PID conditions. TOPCon has inherently better PID resistance because: (1) the front passivation stack (Al₂O₃ + SiNx) is denser and has a higher activation energy for ion transport; (2) the n-type bulk has lower hole concentration, reducing the driving force for ion-induced shunting; (3) the field-effect passivation from Al₂O₃ (negative charge) repels the positive Na⁺ ions that cause PID. Standardised PID testing (IEC 62804: 85°C, 85% RH, −1500 V, 96h) verifies TOPCon cells remain within certified degradation limits."
+      },
+      {
+        q: "What does the troubleshooting tree look like for a batch with simultaneously low Voc AND low Isc?",
+        a: "Simultaneous Voc AND Isc reduction is the most complex case because it cannot be attributed to a single mechanism — Voc and Isc have different physical origins. The troubleshooting tree branches: First, check EL images — are dark areas concentrated at edges (→ incomplete edge isolation → front etch problem) or distributed uniformly across the cell (→ passivation failure → ALD/PECVD problem)? Second, check PL images from the post-passivation step — was lifetime already low before metallisation (→ problem is upstream of firing) or did it appear after firing (→ over-firing, silver spiking, or contamination during firing)? Third, check sheet resistance data — was the boron emitter correct (→ diffusion OK) or off-spec (→ diffusion problem that propagates to both Voc and Isc)? The tree forces the engineer to eliminate all possibilities systematically before touching any process parameter."
+      }
+    ]
   }
 ];

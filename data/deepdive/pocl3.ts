@@ -137,5 +137,55 @@ export const pocl3DeepDive: DeepDiveSlide[] = [
         text: "Full-face respirators and completely sealed protective clothing are mandatory when working near POCl₃. All gas lines and supply connections must be sealed and kept dry. Never allow contact with water — use only dry chemical extinguishers. In the event of a spill or leak, evacuate the area immediately and call emergency services; do not attempt to handle a large release without specialist training."
       }
     ]
+  },
+  {
+    type: "table",
+    title: "POCl₃ Diffusion Parameter Reference",
+    subtitle: "n⁺ Poly-Si Doping Industrial Specifications",
+    headers: ["Parameter", "Value / Range", "Effect of Deviation"],
+    rows: [
+      ["Deposition temperature", "~790 °C", "Higher → more surface phosphorus, lower Rs; lower → insufficient P₂O₅ formation"],
+      ["Drive-in temperature", "~860 °C", "Drives phosphorus deeper into poly-Si; main lever for uniformity through film thickness"],
+      ["Sheet resistance target (n⁺ poly)", "32–62 Ω/□", "Low Rs → good lateral current transport; too low → Auger recombination risk"],
+      ["PSG removal (HF)", "After front etch step", "Residual PSG blocks ALD/PECVD adhesion; trapped metals reduce minority carrier lifetime"],
+      ["POCl₃ source level", "Maintained > minimum threshold", "Low source → insufficient P vapour → high Rs; low level alarm is critical"],
+      ["N₂ bubbler flow", "Calibrated sccm", "Sets POCl₃ carrier concentration; flow meter drift = direct Rs drift"],
+      ["Drive-in O₂ flow", "Minimal / zero", "Post-deposition oxidation forms PSG cap; too much O₂ → excess PSG hard to remove"],
+      ["Dummy wafer count", "Per SOP at both ends of boat", "Without dummies: end wafers see different gas flow → higher Rs at ends (classic failure mode)"],
+      ["Furnace leak rate", "< 1.5 Pa/min", "Air ingress → O₂ dilutes N₂, changes oxidation rate → Rs non-uniformity"],
+      ["Tube saturation runs", "Required after cleaning", "Fresh tube wall absorbs dopant → insufficient phosphorus to wafers → high Rs"],
+      ["Boat cleaning frequency", "Fixed schedule", "PSG buildup on boat creates parasitic dopant source → within-boat Rs non-uniformity"],
+    ],
+  },
+  {
+    type: "faq",
+    title: "Frequently Asked Questions",
+    subtitle: "Interview Preparation & Technical Deep Dive",
+    questions: [
+      {
+        q: "Why is the n⁺ poly-Si sheet resistance target (32–62 Ω/□) so much lower than the boron emitter target (~390 Ω/□)?",
+        a: "They serve completely different roles. The boron emitter must balance between light doping (low Auger recombination, good Voc) and heavy doping (low contact resistance, efficient hole collection). The constraints are tight and the optimum is around 390 Ω/□. The n⁺ poly-Si has no such Voc constraint — any carrier recombining inside the poly-Si has already been 'collected' by crossing the tunnel oxide. The poly-Si is essentially a lateral current conductor (analogous to a metal bus): it must carry current from the entire rear surface area to the metal finger contacts with minimal resistive loss. For this job, the lower Rs the better — practical limits are set by Auger recombination in the poly and cost/time of heavier doping. 32–62 Ω/□ is a commercially practical minimum that keeps finger-to-finger resistance losses to <0.1% of Vmpp."
+      },
+      {
+        q: "What is 'gettering' and why is POCl₃ diffusion one of the best gettering steps in the solar process?",
+        a: "Gettering is the redistribution of metallic impurities (Fe, Cu, Ni, Cr) from the active cell region (p-n junction) to a region where they do less harm. During POCl₃ diffusion at 800–900°C, three mechanisms work simultaneously: (1) Phosphorus gettering — heavy n⁺ doping creates a thermodynamic 'sink' where metals prefer to segregate (lower chemical potential in heavily doped Si); (2) PSG glass gettering — metals dissolved in the P₂O₅/SiO₂ glass on the surface are physically removed with the PSG in the front-etch step; (3) Cl₂ chemical gettering — chlorine reacts with metal chlorides that volatilize and are swept out. The combination can reduce bulk iron concentration by 1–2 orders of magnitude, raising minority carrier lifetime by 10–100×."
+      },
+      {
+        q: "What happens during the 'drive-in' step at 860°C and why is temperature raised for this stage?",
+        a: "During deposition at 790°C, phosphorus enters the near-surface of the poly-Si from the P₂O₅ glass. The concentration gradient is steep — very high at the surface, zero through most of the 130-nm poly-Si film. To make the poly-Si uniformly conducting (as needed for good lateral current transport), the phosphorus must diffuse throughout the full film thickness. Phosphorus diffusivity in poly-Si scales as Dp ∝ exp(−Ea/kT). Raising to 860°C accelerates diffusivity enough that phosphorus reaches the poly-Si bottom (tunnel oxide interface) in the available time (~hundreds of seconds). If the drive-in is skipped, the poly-Si bottom half remains undoped — high resistance layer in series with the tunneling contact."
+      },
+      {
+        q: "Why must dummy wafers be placed at both ends of the quartz boat?",
+        a: "Gas flowing along the length of the LPCVD/diffusion tube is consumed as it reacts with wafer surfaces. By the time the gas reaches the far end of the boat, its composition has changed — less POCl₃ remains. The first and last positions in the boat thus see different dopant concentrations than the middle positions — a systematic 'boat position effect.' Dummy wafers in these positions absorb the non-uniform gas flow without sacrificing production wafers. Additionally, the end wafers shield production wafers from end-effect temperature non-uniformities in the furnace tube. Without dummies, the first and last 5–10 production wafers in every boat show systematically higher Rs — a classic systematic defect that is easily prevented."
+      },
+      {
+        q: "What is the 'within-boat uniformity' specification and what causes it to fail?",
+        a: "Within-boat uniformity (Rs non-uniformity across all positions in the boat) is typically specified as ≤10% standard deviation for a properly functioning tube. It fails due to: (1) Boat saturation effect — freshly cleaned quartz surfaces absorb more dopant, robbing it from production wafers (run qualification wafers first after cleaning); (2) Gas flow asymmetry — if the gas inlet or outlet is blocked or partially obstructed, flow is non-uniform along the tube axis; (3) Temperature zoning — if one heating zone is miscalibrated, wafers in that zone receive different drive-in; (4) Quartz contamination — old deposits on tube walls act as parasitic dopant sources. Each cause has a distinct spatial signature: inlet/outlet problems show an axial gradient, temperature issues show a positional cluster, and boat effects show end-to-middle differences."
+      },
+      {
+        q: "Why is POCl₃ especially dangerous to work with compared to SiH₄ or BCl₃?",
+        a: "POCl₃ combines multiple hazards: (1) Extreme moisture reactivity — in humid air, it immediately hydrolyses, fuming and releasing HCl and H₃PO₄. These fumes are acutely toxic. (2) High toxicity — similar to phosgene in mechanism; inhaled POCl₃ fumes cause deep lung damage with delayed pulmonary oedema that may not manifest for hours after exposure. (3) Liquid phase at room temperature — spills create extended exposure surfaces unlike gases that disperse. (4) No good antidote — HCl burns to the airways are treated symptomatically; there is no neutralising agent for POCl₃-induced phosphate burns. Industrial control: fully sealed gas delivery, no water near equipment (dry chemical extinguishers only), full-face respiratory protection mandatory during any line work, and strict no-single-person rule for maintenance."
+      }
+    ]
   }
 ];

@@ -172,5 +172,87 @@ export const boronDeepDive: DeepDiveSlide[] = [
         text: "Reseat or replace the furnace door and its sealing ring. Perform a leak-rate test and confirm the leak rate is below 1.5 Pa/min before resuming production. Wafers affected by the door-end abnormality should be re-measured; those with sheet resistance outside the circulation limit must be reworked or scrapped."
       }
     ]
+  },
+  {
+    type: "table",
+    title: "Boron Diffusion: Complete Parameter Reference",
+    subtitle: "Industrial Setpoints and Tolerances",
+    headers: ["Parameter", "Value / Range", "Effect on Cell"],
+    rows: [
+      ["Pre-oxidation temperature", "820 °C", "Grows thin SiO₂ that reduces the Boron-Rich Layer; too high → deeper junction before deposition begins"],
+      ["Deposition temperature (BCl₃)", "810 °C", "Controls B₂O₃ formation rate; higher = more surface boron = lower final Rs"],
+      ["Drive-in temperature", "920 °C", "Primary lever for junction depth; +10 °C ≈ −10 Ω/□ on final Rs"],
+      ["Drive-in time", "~1000 s", "More time = deeper junction; too long merges emitter with BSF region"],
+      ["Sheet resistance target", "390 ± 30 Ω/□ (control)", "Balances hole collection vs Auger recombination; ~0.3 µm junction depth"],
+      ["Sheet resistance limit", "390 ± 60 Ω/□ (spec)", "Beyond this, efficiency loss is too large; requires rework or scrap"],
+      ["BCl₃ source temperature", "Precisely controlled (±0.5 °C)", "Direct control of vapour pressure and BCl₃ flow rate"],
+      ["Furnace pressure", "~Atmospheric (controlled)", "Too high → condensation in lines; too low → non-uniform flow"],
+      ["N₂ carrier flow", "Calibrated L/min", "Dilutes BCl₃ to target concentration; flow meter drift = Rs drift"],
+      ["Boat cleaning frequency", "Every 60 runs", "Removes parasitic BSG deposits that cause boat marks and Rs non-uniformity"],
+      ["Tube leak rate", "< 1.5 Pa/min", "Leak = air entry = O₂ interference and unpredictable oxidation during diffusion"],
+      ["Four-point probe spacing", "1 mm", "Standard probe geometry for Rs measurement; must be calibrated regularly"],
+    ],
+  },
+  {
+    type: "content",
+    title: "Doping Profile & Electrical Impact",
+    subtitle: "How Boron Concentration Varies with Depth",
+    bullets: [
+      {
+        label: "Gaussian Concentration Profile",
+        text: "Boron diffusion produces a concentration profile that roughly follows an erfc (complementary error function) shape — very high at the surface and decaying exponentially with depth. The surface concentration after the full recipe is typically 5×10¹⁸ to 10¹⁹ atoms/cm³. The junction (where boron equals the background n-type phosphorus ~10¹⁵ cm⁻³) sits approximately 0.3–0.4 µm below the surface."
+      },
+      {
+        label: "Impact on Open-Circuit Voltage (Voc)",
+        text: "A well-optimized boron emitter achieves low dark saturation current density J₀e (emitter recombination contribution) of <50 fA/cm². This directly sets the upper limit of Voc via: Voc = (kT/q) × ln(Jsc/J₀). Under-diffusing (too shallow or too light) raises Rs and reduces Voc; over-diffusing (too deep/heavy) raises Auger recombination and also reduces Voc. The optimum is narrow — approximately ±30 Ω/□ of the 390 Ω/□ target."
+      },
+      {
+        label: "Impact on Short-Circuit Current (Isc)",
+        text: "The boron emitter region is a 'dead layer' where photon-generated carriers recombine before collection — because the emitter is so heavily doped. Thinner, lighter-doped emitters (higher Rs) have a thinner dead layer and collect more blue photons (UV response). Thicker emitters shade more short wavelengths. This is why modern TOPCon emitters use passivated contacts to reduce dead-layer recombination, allowing slightly heavier doping without the normal efficiency penalty."
+      },
+      {
+        label: "Auger Recombination Limit",
+        text: "Auger recombination (three-carrier process: e + h + e → e + phonon) dominates at doping concentrations above ~10¹⁸ cm⁻³. The Auger lifetime τ_Auger = 1/(C_n × n²) drops rapidly at high doping. For the emitter, Auger recombination is tolerated but minimized by keeping the surface concentration as low as the contact-resistance requirement allows. The selective emitter concept (heavier doping only under metal contacts, lighter doping in illuminated areas) is the solution employed in advanced lines."
+      }
+    ]
+  },
+  {
+    type: "faq",
+    title: "Frequently Asked Questions",
+    subtitle: "Interview Preparation & Technical Deep Dive",
+    questions: [
+      {
+        q: "Why is boron used for the p-type emitter in TOPCon rather than gallium or aluminium?",
+        a: "Boron is the dominant group-III dopant for silicon because: (1) it diffuses predictably by substitutional diffusion at 800–950°C; (2) its diffusivity in silicon is well-characterised and reproducible; (3) it does not segregate to grain boundaries like Al; (4) it does not form deep-level traps (gallium forms slightly deeper levels). Aluminium is used as p-type dopant in PERC/BSF rear contacts but cannot be used as a diffused emitter because it melts at 660°C — far below the 900°C needed to drive it deep enough. Gallium is used in some p-type substrates but its diffusivity in silicon makes it harder to control in furnace diffusion."
+      },
+      {
+        q: "What is the Boron-Rich Layer (BRL) and how does it degrade efficiency?",
+        a: "The BRL is a 2–5 nm thick ultra-heavily doped phase (boron concentration >10²¹ cm⁻³) that forms at the very top surface when molten B₂O₃ is in direct contact with silicon. It acts as an extreme Auger recombination zone — any carrier entering this layer recombines almost instantaneously. Its presence raises the emitter J₀ by 50–100 fA/cm², reducing Voc by 10–20 mV and Isc by visible amounts. The pre-oxidation step grows a thin SiO₂ before BCl₃ introduction, which modulates the B₂O₃ deposition and reduces BRL formation. The post-oxidation during drive-in converts residual BRL into a removable SiO₂ layer."
+      },
+      {
+        q: "What is the 'three-stage recipe' and why must each stage be separate?",
+        a: "Stage 1 (Pre-oxidation): grows uniform SiO₂ before any dopant arrives — ensures a clean, identical starting surface for every wafer. Stage 2 (Deposition): BCl₃ + O₂ flow establishes the B₂O₃ reservoir on the surface; temperature is lower (810°C) to control the deposition rate without over-diffusing. Stage 3 (Drive-in): BCl₃ stops, temperature rises to 920°C; the already-deposited boron redistributes deeper and the post-oxidation cap seals the BSG. Combining stages 1 and 2 would mean depositing dopant onto an incompletely oxidised surface — inconsistent wafer-to-wafer. Combining stages 2 and 3 would mean still introducing BCl₃ at the higher drive-in temperature, over-doping and making Rs uncontrollably low."
+      },
+      {
+        q: "How does BCl₃ differ from BBr₃ and why did this line choose BCl₃?",
+        a: "BBr₃ is a liquid at room temperature requiring a heated source bubbler (~15–20°C), adding complexity. It generates HBr as a byproduct that attacks quartz tube walls, shortening tube life. BCl₃ is already a gas, simplifying delivery. It generates Cl₂, which getters metallic impurities from tube walls — a self-cleaning benefit. BCl₃ requires slightly higher process temperatures (~10–20°C) for equivalent diffusion depth, and is highly toxic (TLV: 1 ppm), requiring fully sealed gas-cabinet delivery. The choice of BCl₃ on this line reflects the balance of lower equipment maintenance cost, longer tube life, and in-situ gettering benefit outweighing the slightly higher hazard handling requirement."
+      },
+      {
+        q: "What does the four-point probe measure and how does sheet resistance relate to junction quality?",
+        a: "A four-point probe measures sheet resistance (Ω/□) by passing a known current through two outer probes and measuring voltage across two inner probes, applying Rs = (π/ln2) × V/I. Sheet resistance integrates the boron concentration profile across the emitter depth — it is proportional to 1/(q × µ × ∫N(x)dx). A lower Rs means more total boron per cm² (either deeper junction or higher surface concentration). Sheet resistance does NOT directly tell you junction depth or surface concentration separately — for that, ECV (electrochemical capacitance-voltage) profiling or SIMS (secondary ion mass spectrometry) are required. Four-point probe is fast, non-destructive, and runs on every wafer — making it the production SPC tool."
+      },
+      {
+        q: "What happens to TOPCon cell efficiency if the boron emitter is too deeply doped (Rs too low, e.g. 250 Ω/□)?",
+        a: "Over-doping the emitter causes: (1) Auger recombination in the emitter region rises sharply, reducing minority carrier (electron) lifetime near the surface — this lowers both Voc and blue photon collection (Isc); (2) The emitter dead layer becomes thicker, absorbing short-wavelength photons without collecting the generated carriers; (3) If the junction penetrates too deep, it overlaps with the back surface field region and can interfere with TOPCon rear structure formation. The net result is a cell that may have lower series resistance but has reduced Voc (by 10–30 mV) and Isc — overall efficiency loss despite the lower emitter resistance."
+      },
+      {
+        q: "Why does the boron source temperature need to be controlled to ±0.5°C?",
+        a: "The vapour pressure of BCl₃ (or BBr₃) follows the Antoine equation — it changes exponentially with temperature. A ±2°C change in source temperature can change vapour pressure by ±10–15%, directly changing the boron supply rate to the furnace tube. Since the boron surface concentration (and hence sheet resistance) depends linearly on total boron deposited, even a 10% change in supply shifts Rs outside the control limit (390 ± 30 Ω/□). Temperature excursions of ±5°C can push Rs outside the circulation limit, requiring full lot evaluation and potential scrap."
+      },
+      {
+        q: "What is 'ion implantation' and what are its advantages over furnace diffusion for solar cells?",
+        a: "Ion implantation fires boron ions directly into the silicon using an ion beam accelerator. Advantages: (1) Extremely precise dose and depth control — no reliance on temperature, gas flow, or source concentration; (2) Inherently single-sided — the beam hits only one face, eliminating boron wrap-around and rear BSG formation, saving the rear-etch step; (3) Can create complex doping profiles (e.g. box profiles) not achievable by diffusion; (4) No BSG by-product. Disadvantages: (1) Physical impact of ions creates crystal damage requiring high-temperature annealing to recover — this adds process steps; (2) Equipment cost is 3–5× the cost of a diffusion furnace; (3) Lower throughput per unit floor area. Currently used in IBC (back-contact) cells and some high-efficiency demonstration cells but not yet cost-competitive for mainstream TOPCon production."
+      }
+    ]
   }
 ];

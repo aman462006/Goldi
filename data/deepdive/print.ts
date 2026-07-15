@@ -174,5 +174,56 @@ export const printDeepDive: DeepDiveSlide[] = [
         ]
       }
     ]
+  },
+  {
+    type: "table",
+    title: "Screen Printing & Firing Parameter Reference",
+    subtitle: "Industrial Metallisation Specifications",
+    headers: ["Parameter", "Value / Range", "Effect of Deviation"],
+    rows: [
+      ["Front finger line width", "< 25–35 µm (high efficiency)", "Wider fingers → more shading loss (Isc drops); narrower → higher aspect ratio paste needed"],
+      ["Snap-off distance", "0.5–2 mm", "Too small → poor snap, smeared lines; too large → more squeegee force needed → breakage"],
+      ["Squeegee hardness", "~75 Shore A", "Harder → less deflection, more paste; softer → more deflection, spreading lines"],
+      ["Squeegee angle", "60–75°", "Lower angle → more paste transfer; higher angle → less paste (rolling action)"],
+      ["Print speed", "Optimised for paste viscosity", "Too fast → under-fill fine mesh; too slow → paste bleeds (line widening)"],
+      ["Paste wet weight per wafer", "Target ± 2 mg (control)", "Directly sets finger cross-section and contact resistance; SPC parameter"],
+      ["Peak firing temperature", "~780–800 °C", "< 750 °C → poor glass frit etching → high Rs contact; > 820 °C → Ag spikes through junction → shunting"],
+      ["Peak zone dwell time", "1–3 seconds", "Too short → incomplete Ag crystallite formation; too long → excessive spiking"],
+      ["Belt speed", "Controls total furnace time", "Faster → less total thermal budget; slower → more firing but risk of over-spiking"],
+      ["Cooling rate", "> 50 °C/s", "Fast cooling prevents Ag crystallite overgrowth at Si interface → lower contact recombination"],
+      ["Rear Ag finger (busbar) paste type", "Non-penetrating (no frit)", "Penetrating paste on busbars creates extra shunt sites → Voc reduction"],
+      ["Screen mesh tension", "Calibrated N/cm", "Low tension → screen sags, snap-off changes → irregular paste deposition"],
+    ],
+  },
+  {
+    type: "faq",
+    title: "Frequently Asked Questions",
+    subtitle: "Interview Preparation & Technical Deep Dive",
+    questions: [
+      {
+        q: "Why does the glass frit in silver paste 'fire through' the SiNx ARC? Isn't silicon nitride extremely hard?",
+        a: "SiNx is mechanically hard (Mohs ~9) but it is NOT chemically inert to molten lead-borosilicate or lead-telluride glass. At 600–780°C, the glass frit melts into a highly reactive viscous liquid. Molten lead borosilicate is a powerful flux that chemically dissolves SiNx at contact points — the lead oxide component provides the oxidising driving force: PbO + SiNx → PbxSiy + NOx (simplified). Once the local SiNx is dissolved, the molten glass wets the silicon surface and silver atoms begin dissolving into the glass. On cooling, silver re-precipitates as Ag crystallites embedded in the silicon surface — these are the actual ohmic contact points. No frit = no SiNx penetration = no electrical contact = open circuit. Pure silver alone has negligible reactivity with SiNx at these temperatures."
+      },
+      {
+        q: "What is the Ag-Si eutectic contact and how does it form during firing?",
+        a: "Pure silver melts at 961°C and silicon at 1414°C — both well above the peak firing temperature of ~780°C. However, in the silver-silicon binary phase diagram, there is a eutectic point at ~3.5 wt% Si where the alloy melts at only ~835°C. During firing, once the glass frit dissolves the SiNx, Ag contacts silicon. At 780°C (below the eutectic), a small amount of silicon dissolves into the silver near the interface. On cooling below 780°C, this Ag-Si mixture becomes supersaturated and Ag crystallites re-precipitate directly into the silicon surface, forming a Ag-doped surface layer that makes intimate, low-resistance electrical contact. The eutectic chemistry allows silver and silicon to form a metallic bond at temperatures well below both melting points."
+      },
+      {
+        q: "Why is the firing temperature window so narrow (±10°C)? What exactly goes wrong at each extreme?",
+        a: "Below 750°C: the glass frit doesn't fully melt or reach sufficient fluidity to wet and dissolve the SiNx. The Ag crystallite formation is incomplete or absent. The contact is Ag-glass-SiNx-Si rather than Ag-Si — contact resistance is 10–100× higher. Series resistance (Rs) increases. Fill factor (FF) and Pmpp drop. Above 820°C: glass frit becomes too aggressive — it etches completely through the ~75 nm SiNx AND the ~10 nm Al₂O₃ AND through the boron emitter (~300 nm) into the n-type bulk. Ag crystallites now nucleate in the n-type base rather than the p-type emitter. This creates a metal contact shorting the junction — shunt resistance (Rsh) collapses and Voc drops catastrophically. The +/-10°C window literally separates 'no contact' from 'perfect contact' from 'shunt.' Belt speed and zone temperature calibration are critical."
+      },
+      {
+        q: "How does screen wear affect print quality and how is it detected?",
+        a: "A printing screen has a finite lifetime measured in thousands of print strokes. As the screen wears: (1) mesh wires deform, changing the aperture size and shape — print line width increases gradually (Cp/Cpk for line width drifts); (2) the emulsion layer (polymer blocking where no paste should print) degrades at edges, causing satellite dots or smearing; (3) mesh tension decreases — snap-off changes and paste deposition becomes non-uniform across the wafer. SPC monitoring of wet weight catches tension-related issues early (weight rising means snap-off geometry changed). Screen visual inspection (microscope) after every N strokes detects mesh and emulsion damage. Proactive screen replacement before the control limit is hit is best practice."
+      },
+      {
+        q: "What is a 'selective emitter' in the context of screen printing?",
+        a: "A selective emitter means the silicon doping under the metal contacts is much heavier (lower Rs, better ohmic contact) than the doping in the illuminated areas between contacts. In printing terms, this means the silver paste must land precisely on the pre-doped, heavily-doped stripes. Two methods achieve this: (1) Laser doping before printing — a laser heats and drives extra phosphorus from the PSG into precise lines where the fingers will land; then printing aligns fingers to these pre-doped lines using camera-based alignment; (2) Self-aligned selective emitter — the paste itself is printed first, then laser fired to locally dope through the paste footprint. The efficiency benefit: illuminated areas with lighter doping have lower Auger recombination and better blue response; contact areas with heavier doping have lower specific contact resistance. Net Voc improvement: 5–15 mV; Jsc improvement: 0.5–1 mA/cm²."
+      },
+      {
+        q: "What is 'fill factor' and which printing defects degrade it most?",
+        a: "Fill factor (FF) = Pmpp/(Voc × Isc). It measures how 'square' the IV curve is — how efficiently the cell delivers its maximum power. FF is degraded by both high series resistance (Rs) and low shunt resistance (Rsh). Rs increases from: broken/thin fingers (open-circuit sections forcing current to detour → higher resistance path), over-high contact resistance (from under-firing or contaminated silicon surface), and non-uniform paste deposition (thick sections create local current choking). Rsh decreases from: silver spiking through the junction (over-firing), incomplete edge isolation (residual n-type at edges from front etch failure — but not a printing issue per se), and micro-cracks under metal fingers from excessive squeegee pressure. FF losses are particularly expensive because they affect all cells in a string equally — a 1% FF loss translates directly to 1% lower panel power."
+      }
+    ]
   }
 ];

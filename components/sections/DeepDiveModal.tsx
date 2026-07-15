@@ -13,7 +13,10 @@ import {
   Zap,
   FlaskConical,
   ChevronUp,
+  ChevronDown,
   Menu,
+  Expand,
+  HelpCircle,
 } from "lucide-react";
 import type { DeepDiveSlide } from "@/data/types";
 import { cn } from "@/lib/utils";
@@ -63,7 +66,7 @@ const VISUALS: Record<string, () => JSX.Element> = {
   elTesting: ElTestingAnimation,
 };
 
-// ─── Callout labels that map to styled callout blocks ─────────────────────────
+// ─── Callout label → icon map ──────────────────────────────────────────────────
 const CALLOUT_ICONS: Record<string, typeof Lightbulb> = {
   "Why It Matters": Lightbulb,
   "Engineering Insight": Zap,
@@ -71,6 +74,7 @@ const CALLOUT_ICONS: Record<string, typeof Lightbulb> = {
   "Common Mistake": AlertTriangle,
   "The Plasma Chemistry": FlaskConical,
   "Cycle Control": Zap,
+  "Quality Control": Factory,
 };
 
 // ─── Main exported component ──────────────────────────────────────────────────
@@ -88,25 +92,27 @@ export function DeepDiveModal({
   const [activeIdx, setActiveIdx] = useState(0);
   const [progress, setProgress] = useState(0);
   const [tocOpen, setTocOpen] = useState(false);
+  const [lightbox, setLightbox] = useState<{ visual: string; caption: string } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
   // Lock body scroll
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, []);
 
-  // Keyboard: Escape closes
+  // Keyboard: Escape closes lightbox first, then modal
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        if (lightbox) setLightbox(null);
+        else onClose();
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [onClose]);
+  }, [onClose, lightbox]);
 
   // Scroll spy + progress tracker
   useEffect(() => {
@@ -150,7 +156,7 @@ export function DeepDiveModal({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.28, ease: "easeOut" }}
     >
-      {/* ── Layered background (pointer-events-none so they never swallow clicks) ── */}
+      {/* ── Layered backgrounds (pointer-events-none) ── */}
       <div className="pointer-events-none absolute inset-0" style={{ background: "#04060d" }} />
       <div
         className="pointer-events-none absolute inset-0"
@@ -160,7 +166,6 @@ export function DeepDiveModal({
         }}
       />
       <div className="pointer-events-none absolute inset-0 grid-lines opacity-[0.038]" />
-      {/* Top accent hairline */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px"
         style={{
@@ -178,8 +183,8 @@ export function DeepDiveModal({
           backdropFilter: "blur(24px) saturate(160%)",
         }}
       >
-        {/* Back button */}
         <button
+          type="button"
           onClick={onClose}
           className="flex items-center gap-1.5 rounded-xl border border-white/10 px-3 py-2 text-[13px] font-medium text-white/50 transition-all hover:border-white/20 hover:bg-white/[0.05] hover:text-white"
         >
@@ -187,18 +192,15 @@ export function DeepDiveModal({
           <span className="hidden sm:inline">Back</span>
         </button>
 
-        {/* Center: title */}
         <div className="flex flex-1 items-center justify-center gap-2.5 overflow-hidden">
           <BookOpen className="h-3.5 w-3.5 flex-shrink-0" style={{ color: accent }} />
           <span className="truncate text-[13px] font-semibold text-white/80">{stepLabel}</span>
         </div>
 
-        {/* Right: progress + mobile toc toggle + close */}
         <div className="flex items-center gap-2.5">
           <span className="hidden font-mono text-[10px] tabular-nums text-white/30 sm:block">
             {Math.round(progress * 100)}%
           </span>
-          {/* Progress pill */}
           <div className="h-1 w-20 overflow-hidden rounded-full bg-white/[0.08] sm:w-28">
             <motion.div
               className="h-full rounded-full"
@@ -207,15 +209,15 @@ export function DeepDiveModal({
               transition={{ duration: 0.12, ease: "easeOut" }}
             />
           </div>
-          {/* Mobile TOC toggle */}
           <button
+            type="button"
             onClick={() => setTocOpen((v) => !v)}
             className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 text-white/40 transition-colors hover:bg-white/[0.06] hover:text-white lg:hidden"
           >
             <Menu className="h-3.5 w-3.5" />
           </button>
-          {/* Close */}
           <button
+            type="button"
             onClick={onClose}
             className="flex h-8 w-8 items-center justify-center rounded-full text-white/35 transition-colors hover:bg-white/[0.07] hover:text-white"
           >
@@ -231,10 +233,7 @@ export function DeepDiveModal({
         {tocOpen && (
           <motion.div
             className="absolute inset-x-0 top-[52px] z-30 border-b border-white/[0.08] lg:hidden"
-            style={{
-              background: "rgba(7,10,20,0.96)",
-              backdropFilter: "blur(24px)",
-            }}
+            style={{ background: "rgba(7,10,20,0.96)", backdropFilter: "blur(24px)" }}
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
@@ -245,6 +244,7 @@ export function DeepDiveModal({
                 const active = i === activeIdx;
                 return (
                   <button
+                    type="button"
                     key={i}
                     onClick={() => scrollTo(i)}
                     className={cn(
@@ -276,11 +276,11 @@ export function DeepDiveModal({
       </AnimatePresence>
 
       {/* ══════════════════════════════════════
-          Body: sidebar TOC + scroll content
+          Body: sidebar + scroll content
           ══════════════════════════════════════ */}
       <div className="relative flex flex-1 overflow-hidden">
 
-        {/* ── Left sidebar TOC (desktop) ── */}
+        {/* ── Desktop sidebar TOC ── */}
         <aside
           className="no-scrollbar hidden w-56 flex-shrink-0 overflow-y-auto border-r border-white/[0.06] py-5 lg:block xl:w-60"
           style={{ background: "rgba(255,255,255,0.013)" }}
@@ -294,6 +294,7 @@ export function DeepDiveModal({
               const active = i === activeIdx;
               return (
                 <button
+                  type="button"
                   key={i}
                   onClick={() => scrollTo(i)}
                   className={cn(
@@ -353,9 +354,7 @@ export function DeepDiveModal({
             {slides.map((slide, i) => (
               <motion.section
                 key={i}
-                ref={(el) => {
-                  sectionRefs.current[i] = el;
-                }}
+                ref={(el) => { sectionRefs.current[i] = el; }}
                 className={cn(i > 0 && "mt-12 border-t border-white/[0.07] pt-12")}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -365,15 +364,21 @@ export function DeepDiveModal({
                   delay: i < 6 ? i * 0.065 : 0,
                 }}
               >
-                <SectionRender slide={slide} accent={accent} isFirst={i === 0} />
+                <SectionRender
+                  slide={slide}
+                  accent={accent}
+                  isFirst={i === 0}
+                  onOpenLightbox={(visual, caption) => setLightbox({ visual, caption })}
+                />
               </motion.section>
             ))}
           </div>
 
-          {/* Scroll-to-top button */}
+          {/* Scroll-to-top */}
           <AnimatePresence>
             {progress > 0.15 && (
               <motion.button
+                type="button"
                 onClick={() => containerRef.current?.scrollTo({ top: 0, behavior: "smooth" })}
                 className="fixed bottom-8 right-6 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-ink-900/80 text-white/50 shadow-lg backdrop-blur-md transition-colors hover:border-white/20 hover:text-white"
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -387,33 +392,72 @@ export function DeepDiveModal({
           </AnimatePresence>
         </div>
       </div>
+
+      {/* ══════════════════════════════════════
+          Visual lightbox overlay
+          ══════════════════════════════════════ */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            className="absolute inset-0 z-[50] flex flex-col items-center justify-center p-6"
+            style={{ background: "rgba(4,6,13,0.95)", backdropFilter: "blur(20px)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setLightbox(null)}
+          >
+            <button
+              type="button"
+              onClick={() => setLightbox(null)}
+              className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/50 transition-colors hover:bg-white/[0.08] hover:text-white"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <div
+              className="w-full max-w-4xl overflow-hidden rounded-2xl border border-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="aspect-video">
+                {(() => {
+                  const V = VISUALS[lightbox.visual];
+                  return V ? <V /> : null;
+                })()}
+              </div>
+            </div>
+            {lightbox.caption && (
+              <p className="mt-4 max-w-2xl text-center text-[13px] leading-relaxed text-white/55">
+                {lightbox.caption}
+              </p>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>,
     document.body
   );
 }
 
 // ══════════════════════════════════════════════════════════
-// Section renderer — maps each slide type to its layout
+// Section renderer
 // ══════════════════════════════════════════════════════════
 function SectionRender({
   slide,
   accent,
   isFirst,
+  onOpenLightbox,
 }: {
   slide: DeepDiveSlide;
   accent: string;
   isFirst: boolean;
+  onOpenLightbox: (visual: string, caption: string) => void;
 }) {
   const Viz = slide.visual ? VISUALS[slide.visual] ?? null : null;
 
-  // Shared section heading
   const SHead = ({ tight = false }: { tight?: boolean }) => (
     <div className={tight ? "mb-5" : "mb-7"}>
       {slide.subtitle && (
-        <div
-          className="mb-2 text-[9.5px] font-bold uppercase tracking-[0.2em]"
-          style={{ color: accent }}
-        >
+        <div className="mb-2 text-[9.5px] font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>
           {slide.subtitle}
         </div>
       )}
@@ -428,17 +472,43 @@ function SectionRender({
     </div>
   );
 
+  // Reusable visual block with expand button
+  const VisualBlock = ({
+    aspectClass = "aspect-video",
+    borderRadius = "rounded-2xl",
+  }: {
+    aspectClass?: string;
+    borderRadius?: string;
+  }) =>
+    Viz && slide.visual ? (
+      <div className={`group relative overflow-hidden ${borderRadius} border border-white/[0.08] bg-ink-950/60`}>
+        <button
+          type="button"
+          onClick={() => onOpenLightbox(slide.visual!, slide.visualCaption || slide.caption || "")}
+          className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-lg border border-white/15 bg-black/40 text-white/40 opacity-0 backdrop-blur-sm transition-all group-hover:opacity-100 hover:border-white/30 hover:text-white"
+          title="Expand"
+        >
+          <Expand className="h-3.5 w-3.5" />
+        </button>
+        <div className={aspectClass}>
+          <Viz />
+        </div>
+        {(slide.visualCaption || slide.caption) && (
+          <p className="border-t border-white/8 px-4 py-3 text-center text-[11.5px] text-white/38">
+            {slide.visualCaption || slide.caption}
+          </p>
+        )}
+      </div>
+    ) : null;
+
   // ── Hero ──────────────────────────────────────────────
   if (slide.type === "hero") {
     return (
       <div
         className="relative overflow-hidden rounded-3xl border border-white/[0.09] p-8 sm:p-12"
-        style={{
-          background: `linear-gradient(140deg, ${accent}1c 0%, ${accent}08 40%, transparent 70%)`,
-        }}
+        style={{ background: `linear-gradient(140deg, ${accent}1c 0%, ${accent}08 40%, transparent 70%)` }}
       >
         <div className="pointer-events-none absolute inset-0 grid-lines opacity-30" />
-        {/* Glow orb */}
         <div
           className="pointer-events-none absolute -top-16 -right-16 h-64 w-64 rounded-full blur-3xl"
           style={{ background: `${accent}14` }}
@@ -446,30 +516,18 @@ function SectionRender({
         <div className="relative">
           <SHead />
           {slide.tagline && (
-            <p
-              className="mb-7 text-base font-medium leading-relaxed sm:text-lg"
-              style={{ color: `${accent}dd` }}
-            >
+            <p className="mb-7 text-base font-medium leading-relaxed sm:text-lg" style={{ color: `${accent}dd` }}>
               {slide.tagline}
             </p>
           )}
           <div className="space-y-4">
             {slide.body?.map((p, i) => (
-              <p key={i} className="text-[15px] leading-relaxed text-white/62">
-                {p}
-              </p>
+              <p key={i} className="text-[15px] leading-relaxed text-white/62">{p}</p>
             ))}
           </div>
-          {Viz && (
-            <div className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-ink-950/60">
-              <div className="aspect-video">
-                <Viz />
-              </div>
-              {slide.visualCaption && (
-                <p className="border-t border-white/8 px-4 py-3 text-center text-[11.5px] text-white/38">
-                  {slide.visualCaption}
-                </p>
-              )}
+          {Viz && slide.visual && (
+            <div className="mt-8">
+              <VisualBlock aspectClass="aspect-video" borderRadius="rounded-2xl" />
             </div>
           )}
           {slide.callout && <DiveCallout {...slide.callout} accent={accent} />}
@@ -487,10 +545,7 @@ function SectionRender({
           {slide.bullets?.map((b, i) => (
             <DiveCard key={i} accent={accent} delay={i * 0.04}>
               {b.label && (
-                <div
-                  className="mb-2.5 font-mono text-[11.5px] font-bold leading-snug"
-                  style={{ color: accent }}
-                >
+                <div className="mb-2.5 font-mono text-[11.5px] font-bold leading-snug" style={{ color: accent }}>
                   {b.label}
                 </div>
               )}
@@ -503,33 +558,20 @@ function SectionRender({
     );
   }
 
-  // ── Split (left text / right viz or text) ──────────────
+  // ── Split ──────────────────────────────────────────────
   if (slide.type === "split") {
     return (
       <div>
         <SHead />
         <div className="grid gap-4 lg:grid-cols-2">
           <DiveCard accent={accent}>
-            <p className="whitespace-pre-line text-[13.5px] leading-relaxed text-white/62">
-              {slide.left}
-            </p>
+            <p className="whitespace-pre-line text-[13.5px] leading-relaxed text-white/62">{slide.left}</p>
           </DiveCard>
-          {Viz ? (
-            <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-ink-950/50">
-              <div className="aspect-[4/3]">
-                <Viz />
-              </div>
-              {slide.visualCaption && (
-                <p className="border-t border-white/8 px-4 py-2.5 text-center text-[11px] text-white/38">
-                  {slide.visualCaption}
-                </p>
-              )}
-            </div>
+          {Viz && slide.visual ? (
+            <VisualBlock aspectClass="aspect-[4/3]" borderRadius="rounded-2xl" />
           ) : slide.right ? (
             <DiveCard accent={accent}>
-              <p className="whitespace-pre-line text-[13.5px] leading-relaxed text-white/62">
-                {slide.right}
-              </p>
+              <p className="whitespace-pre-line text-[13.5px] leading-relaxed text-white/62">{slide.right}</p>
             </DiveCard>
           ) : null}
         </div>
@@ -556,23 +598,75 @@ function SectionRender({
                   boxShadow: `0 4px 24px -8px ${c}10`,
                 }}
               >
-                <div
-                  className="font-mono text-3xl font-bold leading-none tracking-tight sm:text-4xl"
-                  style={{ color: c }}
-                >
+                <div className="font-mono text-3xl font-bold leading-none tracking-tight sm:text-4xl" style={{ color: c }}>
                   {s.value}
                 </div>
                 {s.unit && (
-                  <div className="mt-1 font-mono text-[10px]" style={{ color: `${c}99` }}>
-                    {s.unit}
-                  </div>
+                  <div className="mt-1 font-mono text-[10px]" style={{ color: `${c}99` }}>{s.unit}</div>
                 )}
-                <div className="mt-3 text-[10.5px] uppercase tracking-widest text-white/38">
-                  {s.label}
-                </div>
+                <div className="mt-3 text-[10.5px] uppercase tracking-widest text-white/38">{s.label}</div>
               </div>
             );
           })}
+        </div>
+        {slide.callout && <DiveCallout {...slide.callout} accent={accent} />}
+      </div>
+    );
+  }
+
+  // ── Table ──────────────────────────────────────────────
+  if (slide.type === "table") {
+    return (
+      <div>
+        <SHead />
+        {slide.note && (
+          <p className="mb-5 text-[13px] leading-relaxed text-white/55">{slide.note}</p>
+        )}
+        <div className="no-scrollbar overflow-x-auto rounded-2xl border border-white/[0.08]">
+          <table className="w-full min-w-[540px] border-collapse text-left text-[12.5px]">
+            {slide.headers && (
+              <thead>
+                <tr className="border-b border-white/10 bg-white/[0.03]">
+                  {slide.headers.map((h, i) => (
+                    <th
+                      key={i}
+                      className="px-4 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-white/40"
+                    >
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+            )}
+            <tbody>
+              {slide.rows?.map((row, ri) => (
+                <tr
+                  key={ri}
+                  className={cn(
+                    "border-b border-white/[0.05] transition-colors hover:bg-white/[0.02]",
+                    ri % 2 === 1 && "bg-white/[0.012]"
+                  )}
+                >
+                  {row.map((cell, ci) => (
+                    <td
+                      key={ci}
+                      className={cn(
+                        "px-4 py-3 leading-relaxed",
+                        ci === 0
+                          ? "font-medium text-white/80"
+                          : ci === 1
+                          ? "font-mono text-[11.5px]"
+                          : "text-white/55"
+                      )}
+                      style={ci === 1 ? { color: accent } : undefined}
+                    >
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         {slide.callout && <DiveCallout {...slide.callout} accent={accent} />}
       </div>
@@ -592,13 +686,12 @@ function SectionRender({
               style={{
                 borderColor: `${col.color}28`,
                 background: `linear-gradient(155deg, ${col.color}10, ${col.color}04)`,
-                boxShadow: `0 0 0 0 ${col.color}00`,
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 32px -8px ${col.color}28`;
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 0 0 ${col.color}00`;
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "";
               }}
             >
               <div className="mb-5 flex items-start justify-between gap-2">
@@ -614,14 +707,8 @@ function SectionRender({
               </div>
               <ul className="flex-1 space-y-3">
                 {col.points.map((p, j) => (
-                  <li
-                    key={j}
-                    className="flex gap-2.5 text-[12.5px] leading-relaxed text-white/58"
-                  >
-                    <span
-                      className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full"
-                      style={{ background: col.color }}
-                    />
+                  <li key={j} className="flex gap-2.5 text-[12.5px] leading-relaxed text-white/58">
+                    <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full" style={{ background: col.color }} />
                     {p}
                   </li>
                 ))}
@@ -633,20 +720,18 @@ function SectionRender({
     );
   }
 
-  // ── Steps (numbered timeline) ──────────────────────────
+  // ── Steps ──────────────────────────────────────────────
   if (slide.type === "steps") {
     return (
       <div>
         <SHead />
         <div className="relative space-y-3 pl-6">
-          {/* Vertical timeline line */}
           <div
             className="absolute left-[18px] top-5 bottom-5 w-px"
             style={{ background: `linear-gradient(to bottom, ${accent}60, ${accent}10)` }}
           />
           {slide.steps?.map((step, i) => (
             <div key={i} className="relative flex gap-5">
-              {/* Node */}
               <div
                 className="absolute -left-6 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full font-mono text-[11px] font-bold"
                 style={{
@@ -658,9 +743,7 @@ function SectionRender({
               >
                 {step.n}
               </div>
-              <div
-                className="ml-6 flex-1 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5 transition-all duration-200 hover:border-white/[0.12] hover:bg-white/[0.04]"
-              >
+              <div className="ml-6 flex-1 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5 transition-all duration-200 hover:border-white/[0.12] hover:bg-white/[0.04]">
                 <h4 className="text-[14px] font-semibold text-white/90">{step.title}</h4>
                 <p className="mt-1.5 text-[13px] leading-relaxed text-white/55">{step.text}</p>
               </div>
@@ -676,13 +759,8 @@ function SectionRender({
     return (
       <div>
         <SHead />
-        <div className="mx-auto max-w-2xl overflow-hidden rounded-3xl border border-white/[0.08] bg-ink-950/60 shadow-2xl">
-          <div className="aspect-video">{Viz && <Viz />}</div>
-          {slide.caption && (
-            <p className="border-t border-white/8 px-5 py-4 text-center text-[13px] leading-relaxed text-white/48">
-              {slide.caption}
-            </p>
-          )}
+        <div className="mx-auto max-w-2xl">
+          <VisualBlock aspectClass="aspect-video" borderRadius="rounded-3xl" />
         </div>
       </div>
     );
@@ -695,16 +773,11 @@ function SectionRender({
         <SHead />
         <div className="grid gap-3 sm:grid-cols-2">
           {slide.bullets?.map((b, i) => (
-            <div
-              key={i}
-              className="flex gap-4 rounded-2xl border border-[#ffb020]/16 bg-[#ffb020]/[0.04] p-5"
-            >
+            <div key={i} className="flex gap-4 rounded-2xl border border-[#ffb020]/16 bg-[#ffb020]/[0.04] p-5">
               <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#ffb020]" />
               <div>
                 {b.label && (
-                  <div className="mb-1.5 font-mono text-[12px] font-bold text-white/85">
-                    {b.label}
-                  </div>
+                  <div className="mb-1.5 font-mono text-[12px] font-bold text-white/85">{b.label}</div>
                 )}
                 <p className="text-[13px] leading-relaxed text-white/55">{b.text}</p>
               </div>
@@ -715,10 +788,94 @@ function SectionRender({
     );
   }
 
+  // ── FAQ ────────────────────────────────────────────────
+  if (slide.type === "faq") {
+    return (
+      <div>
+        <SHead />
+        {slide.questions && <FaqSection questions={slide.questions} accent={accent} />}
+      </div>
+    );
+  }
+
   return null;
 }
 
-// ── Glass card helper ──────────────────────────────────────
+// ── FAQ accordion component ────────────────────────────────
+function FaqSection({
+  questions,
+  accent,
+}: {
+  questions: Array<{ q: string; a: string }>;
+  accent: string;
+}) {
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+
+  return (
+    <div className="space-y-2">
+      {questions.map((qa, i) => {
+        const isOpen = openIdx === i;
+        return (
+          <div
+            key={i}
+            className="overflow-hidden rounded-2xl border border-white/[0.07] transition-colors"
+            style={{ background: isOpen ? "rgba(255,255,255,0.028)" : "rgba(255,255,255,0.018)" }}
+          >
+            <button
+              type="button"
+              onClick={() => setOpenIdx(isOpen ? null : i)}
+              className="flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-white/[0.025]"
+            >
+              <span
+                className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full font-mono text-[9px] font-bold transition-all"
+                style={{
+                  background: isOpen ? accent : "rgba(255,255,255,0.08)",
+                  color: isOpen ? "#04060d" : "rgba(255,255,255,0.4)",
+                }}
+              >
+                Q
+              </span>
+              <span
+                className="flex-1 text-[13.5px] font-medium leading-snug transition-colors"
+                style={{ color: isOpen ? "#fff" : "rgba(255,255,255,0.65)" }}
+              >
+                {qa.q}
+              </span>
+              <span className="flex-shrink-0 transition-transform" style={{ color: "rgba(255,255,255,0.3)" }}>
+                {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              </span>
+            </button>
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  className="overflow-hidden"
+                >
+                  <div className="border-t border-white/[0.06] px-5 pb-5 pt-4">
+                    <div className="flex gap-4">
+                      <span
+                        className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full font-mono text-[9px] font-bold"
+                        style={{ background: `${accent}28`, color: accent }}
+                      >
+                        A
+                      </span>
+                      <p className="text-[13.5px] leading-relaxed text-white/65">{qa.a}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Glass card ─────────────────────────────────────────────
 function DiveCard({
   children,
   accent,
@@ -733,30 +890,16 @@ function DiveCard({
       className="group rounded-2xl border border-white/[0.07] bg-white/[0.028] p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/[0.13] hover:bg-white/[0.045] hover:shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{
-        delay: delay ?? 0,
-        duration: 0.4,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      style={{
-        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.04)`,
-      }}
+      transition={{ delay: delay ?? 0, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      style={{ boxShadow: `inset 0 1px 0 rgba(255,255,255,0.04)` }}
     >
       {children}
     </motion.div>
   );
 }
 
-// ── Callout block helper ───────────────────────────────────
-function DiveCallout({
-  label,
-  text,
-  accent,
-}: {
-  label: string;
-  text: string;
-  accent: string;
-}) {
+// ── Callout block ──────────────────────────────────────────
+function DiveCallout({ label, text, accent }: { label: string; text: string; accent: string }) {
   const Icon = CALLOUT_ICONS[label] ?? Lightbulb;
   return (
     <div
@@ -766,15 +909,9 @@ function DiveCallout({
         background: `linear-gradient(135deg, ${accent}0d, ${accent}05)`,
       }}
     >
-      <Icon
-        className="mt-0.5 h-4 w-4 flex-shrink-0"
-        style={{ color: accent }}
-      />
+      <Icon className="mt-0.5 h-4 w-4 flex-shrink-0" style={{ color: accent }} />
       <div>
-        <div
-          className="mb-1.5 text-[9.5px] font-bold uppercase tracking-[0.18em]"
-          style={{ color: accent }}
-        >
+        <div className="mb-1.5 text-[9.5px] font-bold uppercase tracking-[0.18em]" style={{ color: accent }}>
           {label}
         </div>
         <p className="text-[13.5px] leading-relaxed text-white/70">{text}</p>
