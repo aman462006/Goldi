@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -646,11 +646,11 @@ function SectionRender({
             <div key={i} className="relative flex gap-5">
               {/* Node */}
               <div
-                className="absolute -left-6 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full font-mono text-[11px] font-bold ring-4"
+                className="absolute -left-6 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full font-mono text-[11px] font-bold"
                 style={{
                   background: `${accent}22`,
                   color: accent,
-                  ringColor: `${accent}10`,
+                  outline: `4px solid ${accent}10`,
                   border: `1px solid ${accent}44`,
                 }}
               >
@@ -722,7 +722,7 @@ function DiveCard({
   accent,
   delay,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   accent: string;
   delay?: number;
 }) {
