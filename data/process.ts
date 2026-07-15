@@ -342,7 +342,7 @@ export const processSteps: ProcessStep[] = [
       { equation: "SiH₄(g) → Si(s) + 2 H₂(g)", note: "Silane thermally decomposes; Si stays, H₂ leaves as gas" },
     ],
     equipment: {
-      main: "Laplace LPCVD — long quartz-tube furnace, vacuum",
+      main: "LPCVD — long quartz-tube furnace, vacuum",
       detail: [
         "Hundreds of wafers stand vertically in a quartz boat (1000 pcs/boat).",
         "Chamber pumped to low pressure for uniform gas distribution and fewer gas-phase reactions.",
@@ -433,7 +433,7 @@ export const processSteps: ProcessStep[] = [
       { equation: "2 P₂O₅ + 5 Si → 5 SiO₂ + 4 P↓", note: "P₂O₅ reacts with Si, releasing phosphorus dopant" },
     ],
     equipment: {
-      main: "Laplace quartz-tube diffusion furnace",
+      main: "Quartz-tube diffusion furnace",
       detail: [
         "Wafers loaded in a quartz boat (1200 pcs/boat) into the furnace tube.",
         "Deposition of phosphorus on the surface, then isothermal drive-in pushes P into the poly.",
@@ -509,7 +509,7 @@ export const processSteps: ProcessStep[] = [
       { equation: "Si + 2 KOH + H₂O → K₂SiO₃ + 2 H₂↑", note: "Alkaline polish removes front poly & edge junction" },
     ],
     equipment: {
-      main: "Kzone chain PSG removal + Laplace tank polish",
+      main: "Kzone chain PSG removal + tank polish",
       detail: [
         "A water film covers the wafer first; surface tension protects the rear PSG from being etched.",
         "Chain rollers use capillary action to strip front/edge PSG.",
@@ -606,7 +606,7 @@ export const processSteps: ProcessStep[] = [
       { equation: "–Al(CH₃)₂ + 2 H₂O → –Al(OH)₂ + 2 CH₄↑", note: "Water pulse forms Al₂O₃ & regenerates –OH sites" },
     ],
     equipment: {
-      main: "Laplace ALD — TMA + H₂O precursors",
+      main: "ALD — TMA + H₂O precursors",
       detail: [
         "One cycle: TMA dose → purge (N₂/Ar) → H₂O dose → purge. Repeat to target thickness.",
         "Purging between doses is what keeps each half-reaction separated and self-limiting.",
@@ -687,7 +687,7 @@ export const processSteps: ProcessStep[] = [
       { equation: "SiH₄ + NH₃ ⟶(plasma)⟶ SiNₓ:H + H₂", note: "Plasma dissociates SiH₄→Si+H and NH₃→N+H; species recombine on the wafer" },
     ],
     equipment: {
-      main: "Laplace PECVD — RF glow discharge, quartz tube",
+      main: "PECVD — RF glow discharge, quartz tube",
       detail: [
         "Wafer sits on the cathode of a low-pressure glow discharge; resistance heaters set temperature.",
         "Graphite boat holds 416 wafers/boat; SiNₓ deposited front, then rear.",
